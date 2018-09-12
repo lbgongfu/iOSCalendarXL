@@ -44,6 +44,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *TSYangLi;
 @property (weak, nonatomic) IBOutlet UILabel *TSYingLi;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *btnQueryTS;
+@property (weak, nonatomic) IBOutlet UIButton *btnQueryJG;
 
 @end
 
@@ -76,6 +78,9 @@ static int houBtnSelected = 0;
     self.jiangetianshuView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.jiangetianshuView.layer.borderWidth =0.3;
     self.jiangetianshuView.layer.cornerRadius=5.0;
+    
+    self.btnQueryJG.layer.cornerRadius = 5;
+    self.btnQueryTS.layer.cornerRadius = 5;
     
     [self SwitchViews:NULL];
     
