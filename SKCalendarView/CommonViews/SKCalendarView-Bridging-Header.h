@@ -9,3 +9,7 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 
 #import "../SakuraKit/TXSakuraKit.h"
+
+#import "../ZWPlaceHolder/UITextView+ZWPlaceHolder.h"
+
+#import <MWPhotoBrowser/MWPhotoBrowser.h>

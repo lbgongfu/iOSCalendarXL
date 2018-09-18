@@ -19,6 +19,13 @@ protocol CreateRemindDelegate {
 @IBDesignable
 class CreateRemindViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate, MediaCellDelegate, UIDocumentPickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AudioRecorderViewControllerDelegate, SelectLocationDelegate, UITextFieldDelegate, UITextViewDelegate {
     
+    @IBOutlet weak var imageViewClock: UIImageView!
+    @IBOutlet weak var imageViewRing: UIImageView!
+    @IBOutlet weak var imageViewLocation: UIImageView!
+    @IBOutlet weak var imageViewMic: UIImageView!
+    @IBOutlet weak var imageViewRepeat: UIImageView!
+    @IBOutlet weak var imageViewPhoto: UIImageView!
+    @IBOutlet weak var imageViewRemarks: UIImageView!
     @IBOutlet weak var fieldRemindText: UITextView!
     @IBOutlet weak var labelRepeat: UILabel!
     @IBOutlet weak var labelDelay: UILabel!
@@ -474,6 +481,41 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     override func viewDidLoad() {
+        var image = UIImage(named: "CLOCK-1")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewClock.image = image
+        imageViewClock.sakura.tintColor()("accentColor")
+        
+        image = UIImage(named: "ring-1")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewRing.image = image
+        imageViewRing.sakura.tintColor()("accentColor")
+        
+        image = UIImage(named: "repeat")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewRepeat.image = image
+        imageViewRepeat.sakura.tintColor()("accentColor")
+        
+        image = UIImage(named: "location-1")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewLocation.image = image
+        imageViewLocation.sakura.tintColor()("accentColor")
+        
+        image = UIImage(named: "mic-1")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewMic.image = image
+        imageViewMic.sakura.tintColor()("accentColor")
+        
+        image = UIImage(named: "photo")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewPhoto.image = image
+        imageViewPhoto.sakura.tintColor()("accentColor")
+        
+        image = UIImage(named: "remarks")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewRemarks.image = image
+        imageViewRemarks.sakura.tintColor()("accentColor")
+        
         var cellNib = UINib(nibName: "AudioClipCell", bundle: nil)
         audioCollectionView.register(cellNib, forCellWithReuseIdentifier: "audioClipCell")
         cellNib = UINib(nibName: "AddButtonCell", bundle: nil)
@@ -482,6 +524,9 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
         imageCollectionView.register(cellNib, forCellWithReuseIdentifier: "imageCell")
         cellNib = UINib(nibName: "AddButtonCell", bundle: nil)
         imageCollectionView.register(cellNib, forCellWithReuseIdentifier: "addButtonCell")
+        
+        navigationController?.navigationBar.sakura.titleTextAttributes()("navBarTitleColor")
+        navigationController?.navigationBar.sakura.tintColor()("accentColor")
         
         audioCollectionView.clipsToBounds = false
         imageCollectionView.clipsToBounds = false
@@ -552,6 +597,11 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
                 updateImageCollectionViewHeight()
                 imageCollectionView.reloadData()
             }
+        } else {
+            fieldRemindText.text = ""
+        }
+        if "".elementsEqual(fieldRemindText.text) {
+            fieldRemindText.zw_placeHolder = "重要的日程要记得设置一个提醒哦"
         }
         updateAudioCollectionViewHeight()
         updateImageCollectionViewHeight()

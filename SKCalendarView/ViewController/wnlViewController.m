@@ -56,7 +56,7 @@
     self.dayLabel.sakura.textColor(@"accentColor");
     self.holidayLabel.sakura.textColor(@"accentColor");
     
-    self.contentCellHeight = 364;
+    self.contentCellHeight = 340;
     self.reminds = [[NSMutableArray alloc] init];
     UINib *nib = [UINib nibWithNibName:@"RemindCell2" bundle:nil];
     [self.tableViewRemind registerNib:nib forCellReuseIdentifier:@"remindCell"];
@@ -148,6 +148,11 @@
 //    self.holidayLabel.textAlignment = NSTextAlignmentCenter;
     // 获取节日，注意：此处传入的参数为chineseCalendarDay(包含不节日等信息)
     self.holidayLabel.text = [self.calendarView getHolidayAndSolarTermsWithChineseDay:getNoneNil(self.calendarView.chineseCalendarDay[self.calendarView.todayInMonth])];
+    if ([@"" isEqualToString:self.holidayLabel.text]) {
+        self.holidayLabelContainer.hidden = true;
+    } else {
+        self.holidayLabelContainer.hidden = false;
+    }
 //    [self.holidayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 //        //        make.top.equalTo(self.chineseMonthAndDayLabel.mas_left);
 //        //        make.centerX.equalTo(self.chineseMonthAndDayLabel);
@@ -215,9 +220,9 @@
     [self.reminds removeAllObjects];
     NSArray<Remind *> *list = [RemindViewController getRemindList];
     if (list.count == 0) {
-        self.contentCellHeight = 364;
+        self.contentCellHeight = 340;
     } else {
-        self.contentCellHeight = 364 + 60 * list.count;
+        self.contentCellHeight = 340 + 60 * list.count;
         [self.reminds addObjectsFromArray:list];
         [self.tableViewRemind reloadData];
         [self.tableView reloadData];
@@ -266,7 +271,7 @@
     _calendarView.delegate = self;// 获取点击日期的方法，一定要遵循协议
     _calendarView.calendarTodayTitleColor = [UIColor redColor];// 今天标题字体颜色
     _calendarView.calendarTodayTitle = @"今日";// 今天下标题
-    _calendarView.dateColor = [UIColor orangeColor];// 今天日期数字背景颜色
+//    _calendarView.dateColor = [TXSakuraManager tx_colorWithPath:@"accentColor"];// 今天日期数字背景颜色
     _calendarView.calendarTodayColor = [UIColor whiteColor];// 今天日期字体颜色
     _calendarView.dayoffInWeekColor = [UIColor redColor];
     _calendarView.springColor = [UIColor colorWithRed:48 / 255.0 green:200 / 255.0 blue:104 / 255.0 alpha:1];// 春季节气颜色
@@ -401,6 +406,11 @@
     self.chineseMonthAndDayLabel.text = [NSString stringWithFormat:@"农历%@%@", self.calendarView.chineseCalendarMonth[row], getNoneNil(self.calendarView.chineseCalendarDay[row])];
     // 获取节日，注意：此处传入的参数为chineseCalendarDay(不包含节日等信息)
     self.holidayLabel.text = [self.calendarView getHolidayAndSolarTermsWithChineseDay:getNoneNil(self.calendarView.chineseCalendarDay[row])];
+    if ([@"" isEqualToString:self.holidayLabel.text]) {
+        self.holidayLabelContainer.hidden = true;
+    } else {
+        self.holidayLabelContainer.hidden = false;
+    }
 }
 
 #pragma mark - 返回今日

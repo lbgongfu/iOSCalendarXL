@@ -9,7 +9,11 @@
 import UIKit
 import AssetsLibrary
 
-class RemindCell: UITableViewCell, UICollectionViewDataSource {
+protocol RemindCellDelegate {
+    func imageClicked(index: Int, images: [Media])
+}
+
+class RemindCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate {
     
     var medias: [Media] = []{
         didSet {
@@ -28,6 +32,8 @@ class RemindCell: UITableViewCell, UICollectionViewDataSource {
             collectionViewAudio.reloadData()
         }
     }
+    
+    var delegate: RemindCellDelegate?
     
     private var audios: [Media] = []
     
@@ -63,6 +69,12 @@ class RemindCell: UITableViewCell, UICollectionViewDataSource {
                 print("get file path error: \(error)")
             })
             return imageCell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == collectionViewImage {
+            delegate?.imageClicked(index: indexPath.row, images: images)
         }
     }
     

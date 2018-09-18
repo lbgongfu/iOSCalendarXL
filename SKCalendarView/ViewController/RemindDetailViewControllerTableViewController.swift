@@ -9,8 +9,29 @@
 import UIKit
 import AssetsLibrary
 
-class RemindDetailViewControllerTableViewController: UITableViewController, UICollectionViewDataSource, CreateRemindDelegate {
+class RemindDetailViewControllerTableViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate, CreateRemindDelegate, MWPhotoBrowserDelegate {
+    
+    var photos: [MWPhoto] = []
+    
+    func numberOfPhotos(in photoBrowser: MWPhotoBrowser!) -> UInt {
+        return UInt(photos.count)
+    }
+    
+    func photoBrowser(_ photoBrowser: MWPhotoBrowser!, photoAt index: UInt) -> MWPhotoProtocol! {
+        if (index < photos.count) {
+            return photos[Int(index)]
+        }
+        return nil;
+    }
 
+    @IBOutlet weak var imageViewClock: UIImageView!
+    @IBOutlet weak var imageViewRing: UIImageView!
+    @IBOutlet weak var imageViewLocation: UIImageView!
+    @IBOutlet weak var imageViewMic: UIImageView!
+    @IBOutlet weak var imageViewRepeat: UIImageView!
+    @IBOutlet weak var imageViewPhoto: UIImageView!
+    @IBOutlet weak var imageViewRemarks: UIImageView!
+    
     @IBOutlet weak var labelRemindContent: UILabel!
     @IBOutlet weak var labelDate: UILabel!
     @IBOutlet weak var labelRepeatAction: UILabel!
@@ -45,13 +66,41 @@ class RemindDetailViewControllerTableViewController: UITableViewController, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        var image = UIImage(named: "CLOCK-1")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewClock.image = image
+        imageViewClock.sakura.tintColor()("accentColor")
         
-//        labelCalendar.layer.borderColor = UIColor(red: 1, green: 0.5, blue: 0.2, alpha: 1).cgColor
+        image = UIImage(named: "ring-1")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewRing.image = image
+        imageViewRing.sakura.tintColor()("accentColor")
+        
+        image = UIImage(named: "repeat")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewRepeat.image = image
+        imageViewRepeat.sakura.tintColor()("accentColor")
+        
+        image = UIImage(named: "location-1")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewLocation.image = image
+        imageViewLocation.sakura.tintColor()("accentColor")
+        
+        image = UIImage(named: "mic-1")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewMic.image = image
+        imageViewMic.sakura.tintColor()("accentColor")
+        
+        image = UIImage(named: "photo")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewPhoto.image = image
+        imageViewPhoto.sakura.tintColor()("accentColor")
+        
+        image = UIImage(named: "remarks")
+        image = image?.withRenderingMode(.alwaysTemplate)
+        imageViewRemarks.image = image
+        imageViewRemarks.sakura.tintColor()("accentColor")
+        
         labelCalendar.layer.sakura.borderColor()("accentColor")
         labelCalendar.layer.borderWidth = 1
         labelCalendar.layer.cornerRadius = 3
@@ -176,6 +225,19 @@ class RemindDetailViewControllerTableViewController: UITableViewController, UICo
             })
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        photos.removeAll()
+        images.forEach({(media) in
+            let photo = MWPhoto(url: URL(string: media.filePath))
+            photos.append(photo!)
+        })
+        let browser = MWPhotoBrowser(delegate: self)
+        browser?.displayNavArrows = true
+        browser?.displayActionButton = false
+        browser?.setCurrentPhotoIndex(UInt(indexPath.row))
+        self.navigationController?.pushViewController(browser!, animated: true)
     }
     
     func onRemindSaved(newRemind: Remind) {

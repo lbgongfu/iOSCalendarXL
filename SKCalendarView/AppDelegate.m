@@ -18,6 +18,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+    
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
     tabBarController.tabBar.sakura.tintColor(@"accentColor");
     
@@ -67,5 +69,13 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    if ([notification.userInfo objectForKey:@"remindFilePath"] != NULL) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:NULL];
+        [alertController addAction:closeAction];
+        [self.window.rootViewController presentViewController:alertController animated:true completion:nil];
+    }
+}
 
 @end

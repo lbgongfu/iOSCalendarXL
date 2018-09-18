@@ -96,6 +96,7 @@
                                 <collectionViewLayout key="collectionViewLayout" id="Z2H-nY-tcd" customClass="LXCollectionViewLeftOrRightAlignedLayout"/>
                                 <connections>
                                     <outlet property="dataSource" destination="KGk-i7-Jjw" id="JsG-rX-oUk"/>
+                                    <outlet property="delegate" destination="KGk-i7-Jjw" id="E28-Xu-cty"/>
                                 </connections>
                             </collectionView>
                         </subviews>

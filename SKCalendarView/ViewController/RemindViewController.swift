@@ -8,7 +8,20 @@
 
 import UIKit
 
-class RemindViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class RemindViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, RemindCellDelegate, MWPhotoBrowserDelegate {
+    
+    var photos: [MWPhoto] = []
+    
+    func numberOfPhotos(in photoBrowser: MWPhotoBrowser!) -> UInt {
+        return UInt(photos.count)
+    }
+    
+    func photoBrowser(_ photoBrowser: MWPhotoBrowser!, photoAt index: UInt) -> MWPhotoProtocol! {
+        if (index < photos.count) {
+            return photos[Int(index)]
+        }
+        return nil;
+    }
     
     @IBOutlet weak var emptyDataView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -21,7 +34,6 @@ class RemindViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.blue]
         navigationController?.navigationBar.sakura.titleTextAttributes()("navBarTitleColor")
         navigationController?.navigationBar.sakura.tintColor()("accentColor")
         automaticallyAdjustsScrollViewInsets = false
@@ -124,6 +136,8 @@ class RemindViewController: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "remindCell", for: indexPath) as! RemindCell
         cell.selectionStyle = .none
         
+        cell.delegate = self
+        
         let remind = reminds[indexPath.row]
         cell.medias = remind.medias
         cell.labelRemindContent.text = remind.content
@@ -153,6 +167,19 @@ class RemindViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("didSelectRowAt: \(indexPath.row)")
+    }
+    
+    func imageClicked(index: Int, images: [Media]) {
+        photos.removeAll()
+        images.forEach({(media) in
+            let photo = MWPhoto(url: URL(string: media.filePath))
+            photos.append(photo!)
+        })
+        let browser = MWPhotoBrowser(delegate: self)
+        browser?.displayNavArrows = true
+        browser?.displayActionButton = false
+        browser?.setCurrentPhotoIndex(UInt(index))
+        self.navigationController?.pushViewController(browser!, animated: true)
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation

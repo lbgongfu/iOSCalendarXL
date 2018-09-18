@@ -22,7 +22,7 @@
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hnF-BO-gb2">
                         <rect key="frame" x="0.0" y="12" width="58" height="58"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" image="add"/>
+                        <state key="normal" image="add-2"/>
                         <connections>
                             <action selector="addButtonClicked:" destination="gTV-IL-0wX" eventType="touchUpInside" id="6jX-cX-8i2"/>
                         </connections>
@@ -36,6 +36,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="add" width="48" height="48"/>
+        <image name="add-2" width="32" height="32"/>
     </resources>
 </document>

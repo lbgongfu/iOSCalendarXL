@@ -83,6 +83,8 @@
 		A6653F8D214A59F500687B51 /* tianlan.json in Resources */ = {isa = PBXBuildFile; fileRef = A6653F83214A59F400687B51 /* tianlan.json */; };
 		A6653F8E214A59F500687B51 /* zhuqin.json in Resources */ = {isa = PBXBuildFile; fileRef = A6653F84214A59F400687B51 /* zhuqin.json */; };
 		A6653F8F214A59F500687B51 /* xihong.json in Resources */ = {isa = PBXBuildFile; fileRef = A6653F85214A59F500687B51 /* xihong.json */; };
+		A699B652214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = A699B650214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m */; };
+		A699B658214FB8EE00E5F01D /* SKCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A699B656214FB8EE00E5F01D /* SKCollectionViewCell.xib */; };
 		E46BB91A1E8B678400A1E1C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BB9191E8B678400A1E1C7 /* main.m */; };
 		E46BB91D1E8B678400A1E1C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BB91C1E8B678400A1E1C7 /* AppDelegate.m */; };
 		E46BB9231E8B678400A1E1C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E46BB9211E8B678400A1E1C7 /* Main.storyboard */; };
@@ -209,6 +211,9 @@
 		A6653F83214A59F400687B51 /* tianlan.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tianlan.json; sourceTree = "<group>"; };
 		A6653F84214A59F400687B51 /* zhuqin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = zhuqin.json; sourceTree = "<group>"; };
 		A6653F85214A59F500687B51 /* xihong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = xihong.json; sourceTree = "<group>"; };
+		A699B650214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+ZWPlaceHolder.m"; sourceTree = "<group>"; };
+		A699B651214F4B2000E5F01D /* UITextView+ZWPlaceHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+ZWPlaceHolder.h"; sourceTree = "<group>"; };
+		A699B656214FB8EE00E5F01D /* SKCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SKCollectionViewCell.xib; sourceTree = "<group>"; };
 		D40120A811C0307FFDDA7152 /* Pods-SKCalendarView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKCalendarView.release.xcconfig"; path = "Pods/Target Support Files/Pods-SKCalendarView/Pods-SKCalendarView.release.xcconfig"; sourceTree = "<group>"; };
 		E46BB9151E8B678400A1E1C7 /* SKCalendarView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKCalendarView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E46BB9191E8B678400A1E1C7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -438,6 +443,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		A699B64F214F4B2000E5F01D /* ZWPlaceHolder */ = {
+			isa = PBXGroup;
+			children = (
+				A699B650214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m */,
+				A699B651214F4B2000E5F01D /* UITextView+ZWPlaceHolder.h */,
+			);
+			path = ZWPlaceHolder;
+			sourceTree = "<group>";
+		};
 		E46BB90C1E8B678300A1E1C7 = {
 			isa = PBXGroup;
 			children = (
@@ -459,6 +473,7 @@
 		E46BB9171E8B678400A1E1C7 /* SKCalendarView */ = {
 			isa = PBXGroup;
 			children = (
+				A699B64F214F4B2000E5F01D /* ZWPlaceHolder */,
 				A6653F75214985FC00687B51 /* Resources */,
 				A63E6BBB2148D69A006FF099 /* SakuraKit */,
 				A63E6B9C21410870006FF099 /* SKCalendarView.entitlements */,
@@ -536,6 +551,7 @@
 				E49B05101E8F76A8007D230C /* SKWeekCollectionViewCell.m */,
 				A63E6B992140F97D006FF099 /* TestView.h */,
 				A63E6B9A2140F97D006FF099 /* TestView.m */,
+				A699B656214FB8EE00E5F01D /* SKCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -551,6 +567,7 @@
 				E46BB9111E8B678400A1E1C7 /* Sources */,
 				E46BB9121E8B678400A1E1C7 /* Frameworks */,
 				E46BB9131E8B678400A1E1C7 /* Resources */,
+				304E692F4B11BF442DC10F52 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -629,6 +646,7 @@
 				A6653F87214A59F500687B51 /* liuqin.json in Resources */,
 				A6653F8A214A59F500687B51 /* tailan.json in Resources */,
 				872C0A46211F33EE00D813AD /* right@2x.png in Resources */,
+				A699B658214FB8EE00E5F01D /* SKCollectionViewCell.xib in Resources */,
 				A626E70821300875008AD935 /* ImageCell.xib in Resources */,
 				A62922E6212FD47F0032E1E9 /* RemindCell.xib in Resources */,
 				872C0A43211F33EE00D813AD /* left@2x.png in Resources */,
@@ -641,6 +659,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		304E692F4B11BF442DC10F52 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SKCalendarView/Pods-SKCalendarView-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser/MWPhotoBrowser.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MWPhotoBrowser.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SKCalendarView/Pods-SKCalendarView-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9FE074CF4EE7EB1D00BFFA14 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -700,6 +736,7 @@
 				E49B05141E8F76A8007D230C /* SKCalendarCollectionViewCell.m in Sources */,
 				A63E6BF92148D69B006FF099 /* TXSakuraApplication.m in Sources */,
 				878B893E2129BE3C00BB970B /* SolarDatePickerView.m in Sources */,
+				A699B652214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m in Sources */,
 				A62922E2212FB3230032E1E9 /* RemindViewController.swift in Sources */,
 				A63E6BA321413025006FF099 /* RemindCell2.m in Sources */,
 				A63E6BE92148D69B006FF099 /* TXSakuraButton.m in Sources */,

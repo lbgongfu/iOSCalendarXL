@@ -8,13 +8,19 @@
 
 #import "SKCalendarCollectionViewCell.h"
 #import "SKConstant.h"
+#import "TXSakuraKit.h"
 
 @interface SKCalendarCollectionViewCell ()
-@property (nonatomic, strong) UIView * baseView;// 底部view
-@property (nonatomic, strong) UIImageView * backgroundIcon;// 背景图片
-@property (nonatomic, strong) UIImageView * icon;// 日期图片
-@property (nonatomic, strong) UILabel * dateLabel;// 日期
-@property (nonatomic, strong) UILabel * titleLabel;// 日期标题
+@property (weak, nonatomic) IBOutlet UIView *baseView;
+//@property (nonatomic, strong) UIView * baseView;// 底部view
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundIcon;
+//@property (nonatomic, strong) UIImageView * backgroundIcon;// 背景图片
+@property (weak, nonatomic) IBOutlet UIImageView *icon;
+//@property (nonatomic, strong) UIImageView * icon;// 日期图片
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+//@property (nonatomic, strong) UILabel * dateLabel;// 日期
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+//@property (nonatomic, strong) UILabel * titleLabel;// 日期标题
 @property (nonatomic, strong) UIImageView * rightLine;// 右边线
 @property (nonatomic, strong) UIImageView * bottomLine;// 下边线
 
@@ -35,57 +41,68 @@
     return self;
 }
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    if (self) {
+        [self customView];
+        self.enableLine = YES;
+        self.enableDateRoundCorner = YES;
+    }
+}
+
 #pragma mark - 创建界面
 - (void)customView
 {
-    // 底部view
-    self.baseView = [UIView new];
-    [self addSubview:self.baseView];
-    self.baseView.backgroundColor = self.backgroundColor;
-    [self.baseView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
-    }];
+    self.icon.layer.cornerRadius = 20;
+    self.icon.layer.masksToBounds = true;
+//    // 底部view
+//    self.baseView = [UIView new];
+//    [self addSubview:self.baseView];
+//    self.baseView.backgroundColor = self.backgroundColor;
+//    [self.baseView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(self).with.insets(UIEdgeInsetsMake(0, 0, 0, 0));
+//    }];
+//
+//    // 背景图片
+//    self.backgroundIcon = [UIImageView new];
+//    [self.baseView addSubview:self.backgroundIcon];
+//    self.backgroundIcon.alpha = 0.5;
+//    [self.backgroundIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(self.baseView).with.insets(UIEdgeInsetsMake(1, 1, 1, 1));
+//    }];
+//
+//    // 日期图片
+//    self.icon = [UIImageView new];
+//    [self.baseView addSubview:self.icon];
+//    [self.icon mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(self.baseView);
+//        make.top.equalTo(self.baseView).with.offset(3);
+//
+//        make.size.mas_offset(CGSizeMake(25, 25));
+//    }];
     
-    // 背景图片
-    self.backgroundIcon = [UIImageView new];
-    [self.baseView addSubview:self.backgroundIcon];
-    self.backgroundIcon.alpha = 0.5;
-    [self.backgroundIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.baseView).with.insets(UIEdgeInsetsMake(1, 1, 1, 1));
-    }];
-    
-    // 日期图片
-    self.icon = [UIImageView new];
-    [self.baseView addSubview:self.icon];
-    [self.icon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.baseView);
-        make.top.equalTo(self.baseView).with.offset(3);
-        
-        make.size.mas_offset(CGSizeMake(25, 25));
-    }];
-    
-    // 日期
-    self.dateLabel = [UILabel new];
-    [self.baseView addSubview:self.dateLabel];
-    self.dateLabel.font = [UIFont systemFontOfSize:15];
-    self.dateLabel.textAlignment = NSTextAlignmentCenter;
-    [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.icon);
-        make.left.equalTo(self.icon);
-        make.right.equalTo(self.icon);
-    }];
+//    // 日期
+//    self.dateLabel = [UILabel new];
+//    [self.baseView addSubview:self.dateLabel];
+//    self.dateLabel.font = [UIFont systemFontOfSize:15];
+//    self.dateLabel.textAlignment = NSTextAlignmentCenter;
+//    [self.dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.icon);
+//        make.left.equalTo(self.icon);
+//        make.right.equalTo(self.icon);
+//    }];
     
     // 日期标题
-    self.titleLabel = [UILabel new];
-    [self.baseView addSubview:self.titleLabel];
-    self.titleLabel.font = [UIFont systemFontOfSize:10];
-    self.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.icon.mas_bottom).with.offset(2);
-        make.bottom.equalTo(self.baseView).with.offset(-2);
-        make.left.equalTo(self.baseView);
-        make.right.equalTo(self.baseView);
-    }];
+//    self.titleLabel = [UILabel new];
+//    [self.baseView addSubview:self.titleLabel];
+//    self.titleLabel.font = [UIFont systemFontOfSize:10];
+//    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+//    [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+////        make.top.equalTo(self.icon.mas_bottom).with.offset(2);
+//        make.bottom.equalTo(self.baseView).with.offset(-2);
+//        make.left.equalTo(self.baseView);
+//        make.right.equalTo(self.baseView);
+//    }];
     
     
 //    // 边线
@@ -176,11 +193,11 @@
 {
     _enableDateRoundCorner = enableDateRoundCorner;
     if (enableDateRoundCorner == YES) {// 开启圆角
-        UIBezierPath * maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 25, 25) byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(10, 10)];
-        CAShapeLayer * maskLayer = [[CAShapeLayer alloc] init];
-        maskLayer.frame = CGRectMake(0, 0, 25, 25);
-        maskLayer.path = maskPath.CGPath;
-        self.icon.layer.mask = maskLayer;
+//        UIBezierPath * maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 25, 25) byRoundingCorners:UIRectCornerAllCorners cornerRadii:CGSizeMake(10, 10)];
+//        CAShapeLayer * maskLayer = [[CAShapeLayer alloc] init];
+//        maskLayer.frame = CGRectMake(0, 0, 25, 25);
+//        maskLayer.path = maskPath.CGPath;
+//        self.icon.layer.mask = maskLayer;
     }
 }
 

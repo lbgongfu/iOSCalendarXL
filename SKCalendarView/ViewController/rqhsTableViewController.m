@@ -47,11 +47,11 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *btnQueryTS;
 @property (weak, nonatomic) IBOutlet UIButton *btnQueryJG;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewCalendar;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewCalendarHZ1;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewCalendarHZ2;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewCalendarTS1;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewCalendarTS2;
+@property (weak, nonatomic) IBOutlet UIButton *imageViewCalendar;
+@property (weak, nonatomic) IBOutlet UIButton *imageViewCalendarHZ1;
+@property (weak, nonatomic) IBOutlet UIButton *imageViewCalendarHZ2;
+@property (weak, nonatomic) IBOutlet UIButton *imageViewCalendarTS1;
+@property (weak, nonatomic) IBOutlet UIButton *imageViewCalendarTS2;
 
 @end
 
@@ -73,17 +73,17 @@ static int houBtnSelected = 0;
     self.TSYingLiLabel.sakura.textColor(@"accentColor");
     self.btnQueryJG.sakura.backgroundColor(@"accentColor");
     self.btnQueryTS.sakura.backgroundColor(@"accentColor");
-    self.YangLiLabel.sakura.backgroundColor(@"accentColor");
-    self.YingLiLabel.sakura.backgroundColor(@"accentColor");
+    self.YangLiLabel.sakura.textColor(@"accentColor");
+    self.YingLiLabel.sakura.textColor(@"accentColor");
     self.JianGeLabel.sakura.textColor(@"accentColor");
     self.qianBtn.sakura.titleColor(@"accentColor", UIControlStateSelected);
     self.qianBtn.selected = true;
     self.houBtn.sakura.titleColor(@"accentColor", UIControlStateSelected);
-    self.imageViewCalendar.sakura.image(@"calendarImage");
-    self.imageViewCalendarHZ1.sakura.image(@"calendarImage");
-    self.imageViewCalendarHZ2.sakura.image(@"calendarImage");
-    self.imageViewCalendarTS1.sakura.image(@"calendarImage");
-    self.imageViewCalendarTS2.sakura.image(@"calendarImage");
+    self.imageViewCalendar.sakura.image(@"calendarImage", UIControlStateNormal);
+    self.imageViewCalendarHZ1.sakura.image(@"calendarImage", UIControlStateNormal);
+    self.imageViewCalendarHZ2.sakura.image(@"calendarImage", UIControlStateNormal);
+    self.imageViewCalendarTS1.sakura.image(@"calendarImage", UIControlStateNormal);
+    self.imageViewCalendarTS2.sakura.image(@"calendarImage", UIControlStateNormal);
     
     //View设置
     self.firstDateView.layer.borderColor = [UIColor lightGrayColor].CGColor;

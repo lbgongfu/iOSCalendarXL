@@ -32,6 +32,9 @@ class SelectLocationViewController: UIViewController, UITableViewDataSource, CLL
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.sakura.titleTextAttributes()("navBarTitleColor")
+        navigationController?.navigationBar.sakura.tintColor()("accentColor")
+        
         let cellNib = UINib(nibName: "LocationNameCell", bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: "locationNameCell")
         
@@ -146,32 +149,19 @@ class SelectLocationViewController: UIViewController, UITableViewDataSource, CLL
         locationNames.removeAll()
         tableView.reloadData()
         querying = true
-        geoCorder.reverseGeocodeLocation(location, completionHandler: {(placeMarks, error) in
+        let localSearchRequest = MKLocalSearchRequest()
+        localSearchRequest.region = mapView.region
+        localSearchRequest.naturalLanguageQuery = "商务住宅"
+        let localSearch = MKLocalSearch(request: localSearchRequest)
+        localSearch.start(completionHandler: {(response, error) in
             self.querying = false
             if error != nil {
-                print("error: \(error!)")
-//                let alert = UIAlertController(title: "系统提示", message: error?.localizedDescription, preferredStyle: .alert)
-//                let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: {(action) in
-////                    self.dismiss(animated: true, completion: nil)
-//                })
-//                let retryAction = UIAlertAction(title: "重试", style: .default, handler: {(action) in
-//                    self.queryNames(location: location)
-//                })
-//                alert.addAction(cancelAction)
-//                alert.addAction(retryAction)
-//                self.present(alert, animated: true, completion: nil)
+                print(error)
             } else {
-                placeMarks?.forEach({(placeMark) in
-                    print("placemark: \(placeMark.subLocality)")
-                    if placeMark.thoroughfare != nil {
-                        var name = placeMark.thoroughfare!
-                        if placeMark.subThoroughfare != nil {
-                            name.append(placeMark.subThoroughfare!)
-                        }
-                        self.locationNames.append(placeMark.thoroughfare!)
-                    }
+                response?.mapItems.forEach({(item) in
+                    print(item.name)
+                    self.locationNames.append(item.name!)
                 })
-                
                 self.tableView.reloadData()
                 if self.locationNames.count > 0 {
                     self.selectedLocationName = self.locationNames[0]
@@ -182,6 +172,43 @@ class SelectLocationViewController: UIViewController, UITableViewDataSource, CLL
                 }
             }
         })
+        
+//        geoCorder.reverseGeocodeLocation(location, completionHandler: {(placeMarks, error) in
+//            self.querying = false
+//            if error != nil {
+//                print("error: \(error!)")
+////                let alert = UIAlertController(title: "系统提示", message: error?.localizedDescription, preferredStyle: .alert)
+////                let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: {(action) in
+//////                    self.dismiss(animated: true, completion: nil)
+////                })
+////                let retryAction = UIAlertAction(title: "重试", style: .default, handler: {(action) in
+////                    self.queryNames(location: location)
+////                })
+////                alert.addAction(cancelAction)
+////                alert.addAction(retryAction)
+////                self.present(alert, animated: true, completion: nil)
+//            } else {
+//                placeMarks?.forEach({(placeMark) in
+//                    print("placemark: \(placeMark.subLocality)")
+//                    if placeMark.thoroughfare != nil {
+//                        var name = placeMark.thoroughfare!
+//                        if placeMark.subThoroughfare != nil {
+//                            name.append(placeMark.subThoroughfare!)
+//                        }
+//                        self.locationNames.append(placeMark.thoroughfare!)
+//                    }
+//                })
+//
+//                self.tableView.reloadData()
+//                if self.locationNames.count > 0 {
+//                    self.selectedLocationName = self.locationNames[0]
+//                    self.btnConfirm.isEnabled = true
+//                    self.tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .bottom)
+//                } else {
+//                    self.btnConfirm.isEnabled = false
+//                }
+//            }
+//        })
     }
     
     /*

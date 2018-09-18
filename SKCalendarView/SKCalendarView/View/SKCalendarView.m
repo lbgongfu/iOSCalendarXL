@@ -11,6 +11,7 @@
 #import "SKCalendarCollectionViewCell.h"
 #import "SKWeekCollectionViewCell.h"
 #import "SKCalendarManage.h"
+#import "TXSakuraKit.h"
 
 @interface SKCalendarView () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, strong) UICollectionView * weekCollectionView;
@@ -125,7 +126,9 @@
     self.calendarCollectionView.backgroundColor = [UIColor whiteColor];
     self.calendarCollectionView.delegate = self;
     self.calendarCollectionView.dataSource = self;
-    [self.calendarCollectionView registerClass:[SKCalendarCollectionViewCell class] forCellWithReuseIdentifier:@"Calendar"];
+//    [self.calendarCollectionView registerClass:[SKCalendarCollectionViewCell class] forCellWithReuseIdentifier:@"Calendar"];
+    UINib *nib = [UINib nibWithNibName:@"SKCollectionViewCell" bundle:nil];
+    [self.calendarCollectionView registerNib:nib forCellWithReuseIdentifier:@"Calendar"];
     [self.calendarCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.weekCollectionView.mas_bottom);
         make.left.equalTo(self);
@@ -380,7 +383,8 @@
             cell.calendarDateColor = self.calendarTodayColor;
             cell.calendarTitle = getNoneNil(self.calendarTodayTitle);
             cell.calendarTitleColor = self.calendarTodayTitleColor;
-            cell.dateColor = self.dateColor;
+//            cell.dateColor = self.dateColor;
+            cell.dateColor = [TXSakuraManager tx_colorWithPath:@"accentColor"];
             
         } else {
             cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
