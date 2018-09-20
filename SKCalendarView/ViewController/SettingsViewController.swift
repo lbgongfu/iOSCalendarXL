@@ -13,6 +13,18 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var switchViewPopup: UISwitch!
     @IBOutlet weak var switchViewStatusBar: UISwitch!
     
+    @IBAction func valueChanged(_ sender: Any) {
+        if let switchView = sender as? UISwitch {
+            if switchView == switchViewShark {
+                UserDefaults.standard.set(switchView.isOn, forKey: "shark")
+            } else if switchView == switchViewPopup {
+                UserDefaults.standard.set(switchView.isOn, forKey: "popup")
+            } else if switchView == switchViewStatusBar {
+                UserDefaults.standard.set(switchView.isOn, forKey: "statusbar")
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,11 +35,9 @@ class SettingsViewController: UITableViewController {
         switchViewPopup.sakura.onTintColor()("accentColor")
         switchViewStatusBar.sakura.onTintColor()("accentColor")
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        switchViewStatusBar.isOn = UserDefaults.standard.bool(forKey: "statusbar")
+        switchViewPopup.isOn = UserDefaults.standard.bool(forKey: "popup")
+        switchViewShark.isOn = UserDefaults.standard.bool(forKey: "shark")
     }
 
     override func didReceiveMemoryWarning() {

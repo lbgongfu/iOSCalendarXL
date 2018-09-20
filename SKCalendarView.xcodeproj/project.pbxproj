@@ -85,6 +85,7 @@
 		A6653F8F214A59F500687B51 /* xihong.json in Resources */ = {isa = PBXBuildFile; fileRef = A6653F85214A59F500687B51 /* xihong.json */; };
 		A699B652214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = A699B650214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m */; };
 		A699B658214FB8EE00E5F01D /* SKCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A699B656214FB8EE00E5F01D /* SKCollectionViewCell.xib */; };
+		A699B6B5215348E500E5F01D /* RemindTableViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A699B6B4215348E500E5F01D /* RemindTableViewHelper.swift */; };
 		E46BB91A1E8B678400A1E1C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BB9191E8B678400A1E1C7 /* main.m */; };
 		E46BB91D1E8B678400A1E1C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BB91C1E8B678400A1E1C7 /* AppDelegate.m */; };
 		E46BB9231E8B678400A1E1C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E46BB9211E8B678400A1E1C7 /* Main.storyboard */; };
@@ -214,6 +215,7 @@
 		A699B650214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+ZWPlaceHolder.m"; sourceTree = "<group>"; };
 		A699B651214F4B2000E5F01D /* UITextView+ZWPlaceHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+ZWPlaceHolder.h"; sourceTree = "<group>"; };
 		A699B656214FB8EE00E5F01D /* SKCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SKCollectionViewCell.xib; sourceTree = "<group>"; };
+		A699B6B4215348E500E5F01D /* RemindTableViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindTableViewHelper.swift; sourceTree = "<group>"; };
 		D40120A811C0307FFDDA7152 /* Pods-SKCalendarView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKCalendarView.release.xcconfig"; path = "Pods/Target Support Files/Pods-SKCalendarView/Pods-SKCalendarView.release.xcconfig"; sourceTree = "<group>"; };
 		E46BB9151E8B678400A1E1C7 /* SKCalendarView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKCalendarView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E46BB9191E8B678400A1E1C7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				A63E6BB22147A5B4006FF099 /* ThemeViewController.swift */,
 				A6653F6F2149250800687B51 /* SelectRingViewController.swift */,
 				A6653F7A214A420D00687B51 /* SettingsViewController.swift */,
+				A699B6B4215348E500E5F01D /* RemindTableViewHelper.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -746,6 +749,7 @@
 				E49B05111E8F76A8007D230C /* SKCalendarManage.m in Sources */,
 				A63E6B9121397B96006FF099 /* SelectLocationViewController.swift in Sources */,
 				A63E6B9B2140F97D006FF099 /* TestView.m in Sources */,
+				A699B6B5215348E500E5F01D /* RemindTableViewHelper.swift in Sources */,
 				A63E6BED2148D69B006FF099 /* TXSakuraSlider.m in Sources */,
 				A626E70D21304C91008AD935 /* LXCollectionViewLeftOrRightAlignedLayout.m in Sources */,
 				A63E6BB02147A345006FF099 /* ThemeCollectionViewCell.swift in Sources */,

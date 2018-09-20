@@ -70,11 +70,13 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    if ([notification.userInfo objectForKey:@"remindFilePath"] != NULL) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:NULL];
-        [alertController addAction:closeAction];
-        [self.window.rootViewController presentViewController:alertController animated:true completion:nil];
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"popup"]) {
+        if ([notification.userInfo objectForKey:@"remindFilePath"] != NULL) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:NULL];
+            [alertController addAction:closeAction];
+            [self.window.rootViewController presentViewController:alertController animated:true completion:nil];
+        }
     }
 }
 

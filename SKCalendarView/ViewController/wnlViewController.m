@@ -26,7 +26,7 @@
 
 @property (nonatomic, assign) NSUInteger lastMonth;
 @property (nonatomic, assign) NSUInteger nextMonth;
-@property (nonatomic) NSMutableArray<Remind *> *reminds;
+@property (nonatomic) RemindTableViewHelper* helper;
 @property (weak, nonatomic) IBOutlet UIView *calendarViewContainer;
 @property (weak, nonatomic) IBOutlet UILabel *dayLabel;// 公立天
 @property (weak, nonatomic) IBOutlet UILabel *chineseYearLabel;// 农历年
@@ -57,7 +57,11 @@
     self.holidayLabel.sakura.textColor(@"accentColor");
     
     self.contentCellHeight = 340;
-    self.reminds = [[NSMutableArray alloc] init];
+//    self.reminds = [[NSMutableArray alloc] init];
+    self.helper = [RemindTableViewHelper new];
+    self.helper.controller = self;
+    self.tableViewRemind.dataSource = self.helper;
+    self.tableViewRemind.delegate = self.helper;
     UINib *nib = [UINib nibWithNibName:@"RemindCell2" bundle:nil];
     [self.tableViewRemind registerNib:nib forCellReuseIdentifier:@"remindCell"];
 //    [self.view addSubview:self.calendarView];
@@ -172,39 +176,8 @@
     //    [self.backToday addTarget:self action:@selector(clickBackToday) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (tableView == self.tableViewRemind) {
-        return self.reminds.count;
-    } else {
-        return 1;
-    }
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == self.tableViewRemind) {
-        RemindCell2 *cell = (RemindCell2 *)[self.tableViewRemind dequeueReusableCellWithIdentifier:@"remindCell"]; 
-        Remind *remind = (Remind *)[self.reminds objectAtIndex:indexPath.row];
-        NSDateFormatter *formater = [NSDateFormatter new];
-        formater.dateFormat = @"hh:mm";
-        cell.labelTime.text = [formater stringFromDate:remind.date];
-        cell.labelContent.text = remind.content;
-        return cell;
-    } else {
-        return self.contentCell;
-    }
-}
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == self.tableViewRemind) {
-        return 60;
-    } else {
-        return self.contentCellHeight;
-    }
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Remind * remind = [self.reminds objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"showRemindDetail" sender:remind];
+    return self.contentCellHeight;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -212,21 +185,16 @@
     controller.remind = (Remind *)sender;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
 - (void)viewDidAppear:(BOOL)animated {
-    [self.reminds removeAllObjects];
     NSArray<Remind *> *list = [RemindViewController getRemindList];
     if (list.count == 0) {
         self.contentCellHeight = 340;
     } else {
         self.contentCellHeight = 340 + 60 * list.count;
-        [self.reminds addObjectsFromArray:list];
-        [self.tableViewRemind reloadData];
-        [self.tableView reloadData];
+        self.helper.reminds = list;
     }
+    [self.tableView reloadData];
+    [self.tableViewRemind reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

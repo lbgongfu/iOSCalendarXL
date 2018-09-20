@@ -11,5 +11,6 @@
 @interface RemindCell2 : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *labelContent;
 @property (weak, nonatomic) IBOutlet UILabel *labelTime;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewArrow;
 
 @end

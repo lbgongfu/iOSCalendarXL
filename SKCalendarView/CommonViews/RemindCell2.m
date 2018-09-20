@@ -7,12 +7,16 @@
 //
 
 #import "RemindCell2.h"
+#import "TXSakuraKit.h"
 
 @implementation RemindCell2
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    self.imageViewArrow.sakura.tintColor(@"accentColor");
+    UIImage *image = [UIImage imageNamed:@"next"];
+    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.imageViewArrow.image = image;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

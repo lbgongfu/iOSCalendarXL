@@ -71,6 +71,9 @@
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iDC-Kg-ORg">
                                                     <rect key="frame" x="310" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="valueChanged:" destination="Wjq-kz-kx6" eventType="valueChanged" id="jAX-6l-gNs"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="振动" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z2D-MJ-Ekb">
                                                     <rect key="frame" x="16" y="12" width="35" height="21"/>
@@ -97,6 +100,9 @@
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qrP-da-iRp">
                                                     <rect key="frame" x="310" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="valueChanged:" destination="Wjq-kz-kx6" eventType="valueChanged" id="R7P-pe-vct"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提醒弹窗" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UyU-rM-7d7">
                                                     <rect key="frame" x="16" y="12" width="69.5" height="21"/>
@@ -123,6 +129,9 @@
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="flw-Xj-LD1">
                                                     <rect key="frame" x="310" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="valueChanged:" destination="Wjq-kz-kx6" eventType="valueChanged" id="Ib9-yd-zXN"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="常驻状态栏" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaD-dq-fWt">
                                                     <rect key="frame" x="16" y="12" width="87" height="21"/>
@@ -403,10 +412,20 @@
                                                 </view>
                                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" estimatedRowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cG5-YW-iVs">
                                                     <rect key="frame" x="0.0" y="340" width="375" height="24"/>
-                                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <prototypes>
+                                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="TUy-p2-4N1">
+                                                            <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TUy-p2-4N1" id="ZhJ-1n-CBD">
+                                                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                            </tableViewCellContentView>
+                                                        </tableViewCell>
+                                                    </prototypes>
                                                     <connections>
-                                                        <outlet property="dataSource" destination="BBy-2A-9iT" id="JMy-Ad-cYC"/>
-                                                        <outlet property="delegate" destination="BBy-2A-9iT" id="jhl-zh-iXI"/>
+                                                        <outlet property="dataSource" destination="BBy-2A-9iT" id="A2Q-bt-D1g"/>
+                                                        <outlet property="delegate" destination="BBy-2A-9iT" id="rLG-yO-hc3"/>
                                                     </connections>
                                                 </tableView>
                                             </subviews>
@@ -468,6 +487,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yKf-vP-VaK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-327.19999999999999" y="-699.40029985007504"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="mbN-Bs-uWY">
+            <objects>
+                <viewController id="KD2-Zx-4rS" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qx6-T3-MgT"/>
+                        <viewControllerLayoutGuide type="bottom" id="QJA-i2-DWT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="J6x-03-OxS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fWB-oP-jvc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="328.80000000000001" y="-686.80659670164926"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="MDO-Jk-AZR">
@@ -873,6 +910,7 @@
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="lm0-8t-9o8" id="sAf-jj-0Wb"/>
+                                    <outlet property="delegate" destination="lm0-8t-9o8" id="ZIq-SB-Z8R"/>
                                 </connections>
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconfont-locationfill" translatesAutoresizingMaskIntoConstraints="NO" id="SgX-Td-1Kv">
@@ -2002,7 +2040,7 @@
         <image name="tixing" width="488" height="495"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5Au-QB-B0D"/>
-        <segue reference="o9A-2E-Wld"/>
+        <segue reference="evy-AF-qVZ"/>
+        <segue reference="RIB-Dq-0j9"/>
     </inferredMetricsTieBreakers>
 </document>

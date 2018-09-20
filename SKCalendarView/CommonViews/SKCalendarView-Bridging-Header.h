@@ -13,3 +13,5 @@
 #import "../ZWPlaceHolder/UITextView+ZWPlaceHolder.h"
 
 #import <MWPhotoBrowser/MWPhotoBrowser.h>
+
+#import "RemindCell2.h"
