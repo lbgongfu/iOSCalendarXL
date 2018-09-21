@@ -17,7 +17,7 @@ protocol CreateRemindDelegate {
 }
 
 @IBDesignable
-class CreateRemindViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate, MediaCellDelegate, UIDocumentPickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AudioRecorderViewControllerDelegate, SelectLocationDelegate, UITextFieldDelegate, UITextViewDelegate {
+class CreateRemindViewController: UITableViewController, UICollectionViewDataSource, UICollectionViewDelegate, MediaCellDelegate, UIDocumentPickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AudioRecorderViewControllerDelegate, SelectLocationDelegate, UITextViewDelegate {
     
     @IBOutlet weak var imageViewClock: UIImageView!
     @IBOutlet weak var imageViewRing: UIImageView!
@@ -30,7 +30,7 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
     @IBOutlet weak var labelRepeat: UILabel!
     @IBOutlet weak var labelDelay: UILabel!
     @IBOutlet weak var labelTime: UILabel!
-    @IBOutlet weak var fieldComment: UITextField!
+    @IBOutlet weak var fieldComment: UITextView!
     @IBOutlet weak var btnLocation: UIButton!
     @IBOutlet weak var labelCalendar: UILabel!
     
@@ -97,26 +97,7 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
         tempRemind!.date = calendar.date(from: components)!
         print(tempRemind!.date)
         
-        let repeatTextIndex = CreateRemindViewController.repeatActions.index(of: labelRepeat.text!)!
-        switch repeatTextIndex {
-        case 0:
-            tempRemind!.repeatType = .Norepeat
-            break
-        case 1:
-            tempRemind!.repeatType = .RepeatPerYear
-            break
-        case 2:
-            tempRemind!.repeatType = .RepeatPerMonth
-            break
-        case 3:
-            tempRemind!.repeatType = .RepeatPerWeek
-            break
-        case 4:
-            tempRemind!.repeatType = .RepeatPerDay
-            break
-        default:
-            break
-        }
+        tempRemind!.repeatType = RemindRepeatType(rawValue: currentRepeatActionIndex)!
         tempRemind!.delayType = RemindDelayType(rawValue: self.currentDelayActionIndex)!
         tempRemind!.location = btnLocation.currentTitle
         tempRemind!.remarks = fieldComment.text
@@ -342,11 +323,6 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
                 present(sheet, animated: true, completion: nil)
             }
         }
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -576,18 +552,10 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
             formater.dateFormat = "yyyy年MM月dd日 hh:mm"
             labelTime.text = formater.string(from: tempRemind.date)
             currentDate = tempRemind.date
-            labelRepeat.text = "不重复"
-            if tempRemind.repeatType == RemindRepeatType.RepeatPerDay {
-                labelRepeat.text = "每日"
-            } else if tempRemind.repeatType == RemindRepeatType.RepeatPerMonth {
-                labelRepeat.text = "每月"
-            } else if tempRemind.repeatType == RemindRepeatType.RepeatPerWeek {
-                labelRepeat.text = "每周"
-            } else if tempRemind.repeatType == RemindRepeatType.RepeatPerYear {
-                labelRepeat.text = "每年"
-            }
+            labelRepeat.text = CreateRemindViewController.repeatActions[tempRemind.repeatType.rawValue]
+            currentRepeatActionIndex = tempRemind.repeatType.rawValue
             labelDelay.text = CreateRemindViewController.delayActions[tempRemind.delayType.rawValue]
-            currentRepeatActionIndex = CreateRemindViewController.repeatActions.index(of: labelRepeat.text!)!
+            currentDelayActionIndex = tempRemind.delayType.rawValue
             if audioClips.count > 0 {
                 updateAudioCollectionViewHeight()
                 audioCollectionView.reloadData()
@@ -599,9 +567,13 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
             }
         } else {
             fieldRemindText.text = ""
+            fieldComment.text = ""
         }
         if "".elementsEqual(fieldRemindText.text) {
             fieldRemindText.zw_placeHolder = "重要的日程要记得设置一个提醒哦"
+        }
+        if "".elementsEqual(fieldComment.text) {
+            fieldComment.zw_placeHolder = "备注"
         }
         updateAudioCollectionViewHeight()
         updateImageCollectionViewHeight()

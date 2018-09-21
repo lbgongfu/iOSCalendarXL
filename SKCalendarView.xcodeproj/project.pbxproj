@@ -86,6 +86,10 @@
 		A699B652214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = A699B650214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m */; };
 		A699B658214FB8EE00E5F01D /* SKCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A699B656214FB8EE00E5F01D /* SKCollectionViewCell.xib */; };
 		A699B6B5215348E500E5F01D /* RemindTableViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A699B6B4215348E500E5F01D /* RemindTableViewHelper.swift */; };
+		A699B6BC2154A73100E5F01D /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A699B6BB2154A73100E5F01D /* NotificationCenter.framework */; };
+		A699B6BF2154A73100E5F01D /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A699B6BE2154A73100E5F01D /* TodayViewController.swift */; };
+		A699B6C22154A73100E5F01D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A699B6C02154A73100E5F01D /* MainInterface.storyboard */; };
+		A699B6C62154A73200E5F01D /* SKCalendarViewWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A699B6BA2154A73100E5F01D /* SKCalendarViewWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E46BB91A1E8B678400A1E1C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BB9191E8B678400A1E1C7 /* main.m */; };
 		E46BB91D1E8B678400A1E1C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BB91C1E8B678400A1E1C7 /* AppDelegate.m */; };
 		E46BB9231E8B678400A1E1C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E46BB9211E8B678400A1E1C7 /* Main.storyboard */; };
@@ -98,6 +102,30 @@
 		E49B05151E8F76A8007D230C /* SKCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = E49B050E1E8F76A8007D230C /* SKCalendarView.m */; };
 		E49B05161E8F76A8007D230C /* SKWeekCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E49B05101E8F76A8007D230C /* SKWeekCollectionViewCell.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A699B6C42154A73200E5F01D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E46BB90D1E8B678300A1E1C7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A699B6B92154A73100E5F01D;
+			remoteInfo = SKCalendarViewWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A699B6CA2154A73200E5F01D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A699B6C62154A73200E5F01D /* SKCalendarViewWidget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6841B559C4AF4A4F31494B4D /* Pods-SKCalendarView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKCalendarView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SKCalendarView/Pods-SKCalendarView.debug.xcconfig"; sourceTree = "<group>"; };
@@ -216,6 +244,11 @@
 		A699B651214F4B2000E5F01D /* UITextView+ZWPlaceHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+ZWPlaceHolder.h"; sourceTree = "<group>"; };
 		A699B656214FB8EE00E5F01D /* SKCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SKCollectionViewCell.xib; sourceTree = "<group>"; };
 		A699B6B4215348E500E5F01D /* RemindTableViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindTableViewHelper.swift; sourceTree = "<group>"; };
+		A699B6BA2154A73100E5F01D /* SKCalendarViewWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SKCalendarViewWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A699B6BB2154A73100E5F01D /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		A699B6BE2154A73100E5F01D /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		A699B6C12154A73100E5F01D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		A699B6C32154A73100E5F01D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D40120A811C0307FFDDA7152 /* Pods-SKCalendarView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKCalendarView.release.xcconfig"; path = "Pods/Target Support Files/Pods-SKCalendarView/Pods-SKCalendarView.release.xcconfig"; sourceTree = "<group>"; };
 		E46BB9151E8B678400A1E1C7 /* SKCalendarView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKCalendarView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E46BB9191E8B678400A1E1C7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -242,6 +275,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A699B6B72154A73100E5F01D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A699B6BC2154A73100E5F01D /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E46BB9121E8B678400A1E1C7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -315,6 +356,7 @@
 			children = (
 				A63E6B8E2139788E006FF099 /* MapKit.framework */,
 				E6F274A7927909A0CFC5AD2B /* libPods-SKCalendarView.a */,
+				A699B6BB2154A73100E5F01D /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -455,10 +497,21 @@
 			path = ZWPlaceHolder;
 			sourceTree = "<group>";
 		};
+		A699B6BD2154A73100E5F01D /* SKCalendarViewWidget */ = {
+			isa = PBXGroup;
+			children = (
+				A699B6BE2154A73100E5F01D /* TodayViewController.swift */,
+				A699B6C02154A73100E5F01D /* MainInterface.storyboard */,
+				A699B6C32154A73100E5F01D /* Info.plist */,
+			);
+			path = SKCalendarViewWidget;
+			sourceTree = "<group>";
+		};
 		E46BB90C1E8B678300A1E1C7 = {
 			isa = PBXGroup;
 			children = (
 				E46BB9171E8B678400A1E1C7 /* SKCalendarView */,
+				A699B6BD2154A73100E5F01D /* SKCalendarViewWidget */,
 				E46BB9161E8B678400A1E1C7 /* Products */,
 				704A77DB0C8B0FF0DDB03F64 /* Pods */,
 				9224897CB7A6DAF68F20EEF2 /* Frameworks */,
@@ -469,6 +522,7 @@
 			isa = PBXGroup;
 			children = (
 				E46BB9151E8B678400A1E1C7 /* SKCalendarView.app */,
+				A699B6BA2154A73100E5F01D /* SKCalendarViewWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -562,6 +616,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A699B6B92154A73100E5F01D /* SKCalendarViewWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A699B6C72154A73200E5F01D /* Build configuration list for PBXNativeTarget "SKCalendarViewWidget" */;
+			buildPhases = (
+				A699B6B62154A73100E5F01D /* Sources */,
+				A699B6B72154A73100E5F01D /* Frameworks */,
+				A699B6B82154A73100E5F01D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SKCalendarViewWidget;
+			productName = SKCalendarViewWidget;
+			productReference = A699B6BA2154A73100E5F01D /* SKCalendarViewWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		E46BB9141E8B678400A1E1C7 /* SKCalendarView */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E46BB92C1E8B678400A1E1C7 /* Build configuration list for PBXNativeTarget "SKCalendarView" */;
@@ -571,10 +642,12 @@
 				E46BB9121E8B678400A1E1C7 /* Frameworks */,
 				E46BB9131E8B678400A1E1C7 /* Resources */,
 				304E692F4B11BF442DC10F52 /* [CP] Copy Pods Resources */,
+				A699B6CA2154A73200E5F01D /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A699B6C52154A73200E5F01D /* PBXTargetDependency */,
 			);
 			name = SKCalendarView;
 			productName = SKCalendarView;
@@ -588,15 +661,24 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SK;
+				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = shevchenko;
 				TargetAttributes = {
+					A699B6B92154A73100E5F01D = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = 2FQ6D7MFY2;
+						ProvisioningStyle = Automatic;
+					};
 					E46BB9141E8B678400A1E1C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 2FQ6D7MFY2;
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 0;
+							};
 							com.apple.iCloud = {
 								enabled = 1;
 							};
@@ -618,11 +700,20 @@
 			projectRoot = "";
 			targets = (
 				E46BB9141E8B678400A1E1C7 /* SKCalendarView */,
+				A699B6B92154A73100E5F01D /* SKCalendarViewWidget */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A699B6B82154A73100E5F01D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A699B6C22154A73100E5F01D /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E46BB9131E8B678400A1E1C7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -701,6 +792,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A699B6B62154A73100E5F01D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A699B6BF2154A73100E5F01D /* TodayViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E46BB9111E8B678400A1E1C7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -769,7 +868,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		A699B6C52154A73200E5F01D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A699B6B92154A73100E5F01D /* SKCalendarViewWidget */;
+			targetProxy = A699B6C42154A73200E5F01D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		A699B6C02154A73100E5F01D /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A699B6C12154A73100E5F01D /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		E46BB9211E8B678400A1E1C7 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -789,6 +904,63 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A699B6C82154A73200E5F01D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2FQ6D7MFY2;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SKCalendarViewWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = shigukeji.xkl.SKCalendarView.SKCalendarViewWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		A699B6C92154A73200E5F01D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2FQ6D7MFY2;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = SKCalendarViewWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = shigukeji.xkl.SKCalendarView.SKCalendarViewWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		E46BB92A1E8B678400A1E1C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -881,9 +1053,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6841B559C4AF4A4F31494B4D /* Pods-SKCalendarView.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SKCalendarView/SKCalendarView.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 2FQ6D7MFY2;
 				INFOPLIST_FILE = SKCalendarView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -901,9 +1075,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D40120A811C0307FFDDA7152 /* Pods-SKCalendarView.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SKCalendarView/SKCalendarView.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = 2FQ6D7MFY2;
 				INFOPLIST_FILE = SKCalendarView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -919,6 +1095,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A699B6C72154A73200E5F01D /* Build configuration list for PBXNativeTarget "SKCalendarViewWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A699B6C82154A73200E5F01D /* Debug */,
+				A699B6C92154A73200E5F01D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E46BB9101E8B678300A1E1C7 /* Build configuration list for PBXProject "SKCalendarView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

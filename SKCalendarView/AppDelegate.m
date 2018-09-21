@@ -39,6 +39,26 @@
     NSString *name = [TXSakuraManager getSakuraCurrentName];
     NSInteger type = [TXSakuraManager getSakuraCurrentType];
     [TXSakuraManager shiftSakuraWithName:name type:type];
+    
+//    if let notifications = UIApplication.shared.scheduledLocalNotifications {
+//        notifications.forEach({(notification) in
+//            if let userInfo = notification.userInfo {
+//                if let remindFilePath = userInfo["remindFilePath"] as? String {
+//                    if remindFilePath == tempRemind?.filePath {
+//                        UIApplication.shared.cancelLocalNotification(notification)
+//                    }
+//                }
+//            }
+//        })
+//    }
+    
+    NSInteger launchCount = [NSUserDefaults.standardUserDefaults integerForKey:@"launchCount"];
+    if (launchCount == 0) {
+        NSArray<UILocalNotification *> *list = UIApplication.sharedApplication.scheduledLocalNotifications;
+        [UIApplication.sharedApplication cancelAllLocalNotifications];
+        list = UIApplication.sharedApplication.scheduledLocalNotifications;
+    }
+    [NSUserDefaults.standardUserDefaults setInteger:launchCount + 1 forKey:@"launchCount"];
     return YES;
 }
 

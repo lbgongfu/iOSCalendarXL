@@ -151,4 +151,8 @@ class RemindCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewD
 
         // Configure the view for the selected state
     }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
 }

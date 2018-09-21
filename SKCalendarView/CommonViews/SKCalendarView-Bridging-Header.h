@@ -15,3 +15,5 @@
 #import <MWPhotoBrowser/MWPhotoBrowser.h>
 
 #import "RemindCell2.h"
+
+#import "../SKCalendarView/Algorithm/SKCalendarManage.h"

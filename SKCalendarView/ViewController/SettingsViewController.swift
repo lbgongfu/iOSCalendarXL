@@ -9,35 +9,39 @@
 import UIKit
 
 class SettingsViewController: UITableViewController {
-    @IBOutlet weak var switchViewShark: UISwitch!
+//    @IBOutlet weak var switchViewShark: UISwitch!
     @IBOutlet weak var switchViewPopup: UISwitch!
-    @IBOutlet weak var switchViewStatusBar: UISwitch!
+//    @IBOutlet weak var switchViewStatusBar: UISwitch!
     
     @IBAction func valueChanged(_ sender: Any) {
         if let switchView = sender as? UISwitch {
-            if switchView == switchViewShark {
-                UserDefaults.standard.set(switchView.isOn, forKey: "shark")
-            } else if switchView == switchViewPopup {
-                UserDefaults.standard.set(switchView.isOn, forKey: "popup")
-            } else if switchView == switchViewStatusBar {
-                UserDefaults.standard.set(switchView.isOn, forKey: "statusbar")
-            }
+            UserDefaults.standard.set(switchView.isOn, forKey: "popup")
+//            if switchView == switchViewShark {
+//                UserDefaults.standard.set(switchView.isOn, forKey: "shark")
+//            } else if switchView == switchViewPopup {
+//                UserDefaults.standard.set(switchView.isOn, forKey: "popup")
+//            } else if switchView == switchViewStatusBar {
+//                UserDefaults.standard.set(switchView.isOn, forKey: "statusbar")
+//            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let header = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.frame.size.width, height: 0.01))
+        tableView.tableHeaderView = header
+        
         navigationController?.navigationBar.sakura.titleTextAttributes()("navBarTitleColor")
         navigationController?.navigationBar.sakura.tintColor()("accentColor")
         
-        switchViewShark.sakura.onTintColor()("accentColor")
+//        switchViewShark.sakura.onTintColor()("accentColor")
         switchViewPopup.sakura.onTintColor()("accentColor")
-        switchViewStatusBar.sakura.onTintColor()("accentColor")
+//        switchViewStatusBar.sakura.onTintColor()("accentColor")
 
-        switchViewStatusBar.isOn = UserDefaults.standard.bool(forKey: "statusbar")
+//        switchViewStatusBar.isOn = UserDefaults.standard.bool(forKey: "statusbar")
         switchViewPopup.isOn = UserDefaults.standard.bool(forKey: "popup")
-        switchViewShark.isOn = UserDefaults.standard.bool(forKey: "shark")
+//        switchViewShark.isOn = UserDefaults.standard.bool(forKey: "shark")
     }
 
     override func didReceiveMemoryWarning() {

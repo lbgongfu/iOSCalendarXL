@@ -177,12 +177,15 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.contentCellHeight;
+//    return self.contentCellHeight;
+    return self.tableView.frame.size.height - 114;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    RemindDetailViewControllerTableViewController *controller = (RemindDetailViewControllerTableViewController *)segue.destinationViewController;
-    controller.remind = (Remind *)sender;
+    if ([segue.identifier isEqual: @"editRemind"]) {
+        CreateRemindViewController *controller = (CreateRemindViewController *)(((UINavigationController *)segue.destinationViewController).topViewController);
+        controller.remind = (Remind *)sender;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -190,11 +193,14 @@
     if (list.count == 0) {
         self.contentCellHeight = 340;
     } else {
-        self.contentCellHeight = 340 + 60 * list.count;
+        self.contentCellHeight = 340 + 70;
         self.helper.reminds = list;
     }
     [self.tableView reloadData];
     [self.tableViewRemind reloadData];
+    
+    NSDate *now = [NSDate new];
+    [self.calendarView checkCalendarWithAppointDate:now];
 }
 
 - (void)didReceiveMemoryWarning {

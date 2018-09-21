@@ -44,7 +44,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *TSYingLiLabel;
 @property (weak, nonatomic) IBOutlet UILabel *TSYangLi;
 @property (weak, nonatomic) IBOutlet UILabel *TSYingLi;
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *btnQueryTS;
 @property (weak, nonatomic) IBOutlet UIButton *btnQueryJG;
 @property (weak, nonatomic) IBOutlet UIButton *imageViewCalendar;
@@ -238,7 +237,7 @@ static int houBtnSelected = 0;
 - (IBAction)solarResultBtnClick:(id)sender {
     self.btn.hidden = NO;
     self.solarDateView.hidden = NO;
-    
+    self.solarDateView.date = solarDate;
     [UIView animateWithDuration:0.3 animations:^{
         self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
         [self.solarDateView show];
@@ -248,6 +247,7 @@ static int houBtnSelected = 0;
 - (IBAction)lunarResultBtnClick:(id)sender {
     self.btn.hidden = NO;
     self.lunarDateView.hidden = NO;
+    self.lunarDateView.date = lunarDate;
     [UIView animateWithDuration:0.3 animations:^{
         self.lunarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
         [self.lunarDateView show];
@@ -257,6 +257,7 @@ static int houBtnSelected = 0;
 - (IBAction)firstDateBtnClick:(id)sender {
     self.btn.hidden = NO;
     self.solarDateView.hidden = NO;
+    self.solarDateView.date = solarDate;
     [UIView animateWithDuration:0.3 animations:^{
         self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
         [self.solarDateView show];
@@ -266,6 +267,7 @@ static int houBtnSelected = 0;
 - (IBAction)secondDateBtnClick:(id)sender {
     self.btn.hidden = NO;
     self.lunarDateView.hidden = NO;
+    self.lunarDateView.date = lunarDate;
     [UIView animateWithDuration:0.3 animations:^{
         self.lunarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
         [self.lunarDateView show];
@@ -275,6 +277,7 @@ static int houBtnSelected = 0;
 - (IBAction)selectDateBtnClick:(id)sender {
     self.btn.hidden = NO;
     self.solarDateView.hidden = NO;
+    self.solarDateView.date = solarDate;
     [UIView animateWithDuration:0.3 animations:^{
         self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
         [self.solarDateView show];
@@ -396,7 +399,8 @@ static int houBtnSelected = 0;
     [CalendarDisplyManager resultWithLunar:l resultFormat:^(NSString *year,
                                                             NSString *month,
                                                             NSString *day) {
-        [self.lunarResultBtn setTitle: [NSString stringWithFormat:@"%@年 %@ %@",year,month,day] forState: UIControlStateNormal];
+        NSString *title = [NSString stringWithFormat:@"%@年 %@ %@",year,month,day];
+        [self.lunarResultBtn setTitle: title forState: UIControlStateNormal];
     }];
 }
 

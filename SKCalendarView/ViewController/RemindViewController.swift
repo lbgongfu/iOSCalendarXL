@@ -134,6 +134,8 @@ class RemindViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "remindCell", for: indexPath) as! RemindCell
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPress(_:)))
+        cell.addGestureRecognizer(longPress)
         cell.selectionStyle = .none
         
         cell.delegate = self
@@ -150,23 +152,66 @@ class RemindViewController: UIViewController, UITableViewDataSource, UITableView
         cell.labelTime.text = dateFormater.string(from: remind.date)
         
         let calendar = Calendar(identifier: .chinese)
-        let comp = calendar.dateComponents([.day], from: remind.date, to: Date())
-        let days = comp.day!
-        if days == 0 {
+        let day = calendar.component(.day, from: remind.date)
+        let dayOfNow = calendar.component(.day, from: Date())
+        if day == dayOfNow {
             cell.labelFriendlyTime.text = "今天"
         } else {
-            cell.labelFriendlyTime.text = "距今\(abs(days))天"
+            let comp = calendar.dateComponents([.day, .second], from: remind.date, to: Date())
+            var days = abs(comp.day!)
+            let seconds = abs(comp.second!)
+            if seconds > 0 {
+                days += 1
+            }
+            cell.labelFriendlyTime.text = "距今\(days)天"
         }
         return cell
     }
     
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        performSegue(withIdentifier: "showRemindDetail", sender: reminds[indexPath.row])
-        return indexPath
+    var indexToDelete = -1
+    
+    @objc func longPress(_ ges: UILongPressGestureRecognizer) {
+        if ges.state == .began {
+            let point = ges.location(in: tableView)
+            indexToDelete = (tableView.indexPathForRow(at: point)?.row)!
+            let controller = UIAlertController(title: "提示", message: "您确定删除提醒吗？", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "点错了", style: .cancel, handler: {(action) in
+                
+            })
+            
+            let positiveAction = UIAlertAction(title: "确定", style: .destructive, handler: {(action) in
+                if self.indexToDelete < 0 || self.indexToDelete > self.reminds.count - 1 {
+                    return
+                }
+                let remindToDelete = self.reminds[self.indexToDelete]
+                if let notifications = UIApplication.shared.scheduledLocalNotifications {
+                    notifications.forEach({(notification) in
+                        if let userInfo = notification.userInfo {
+                            if let remindFilePath = userInfo["remindFilePath"] as? String {
+                                if remindFilePath == remindToDelete.filePath {
+                                    UIApplication.shared.cancelLocalNotification(notification)
+                                }
+                            }
+                        }
+                    })
+                }
+                do {
+                    try FileManager.default.removeItem(atPath: (remindToDelete.filePath)!)
+                } catch let error as NSError {
+                    print("delete remind occurred error: \(error)")
+                }
+                self.reminds.remove(at: self.indexToDelete)
+                self.tableView.reloadData()
+            })
+            controller.addAction(cancelAction)
+            controller.addAction(positiveAction)
+            present(controller, animated: true, completion: nil)
+        }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("didSelectRowAt: \(indexPath.row)")
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        performSegue(withIdentifier: "editRemind", sender: reminds[indexPath.row])
+        return indexPath
     }
     
     func imageClicked(index: Int, images: [Media]) {
@@ -186,9 +231,9 @@ class RemindViewController: UIViewController, UITableViewDataSource, UITableView
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "showRemindDetail" {
-            let detailController = segue.destination as! RemindDetailViewControllerTableViewController
-            detailController.remind = sender as? Remind
+        if segue.identifier == "editRemind" {
+            let controller = (segue.destination as! UINavigationController).topViewController as! CreateRemindViewController
+            controller.remind = sender as? Remind
         }
     }
 
