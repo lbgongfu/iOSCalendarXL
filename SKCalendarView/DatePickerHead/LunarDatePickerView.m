@@ -61,6 +61,15 @@
 }
 
 - (void)configData {
+    
+    self.chineseMonths=[NSArray arrayWithObjects:
+                        @"正月", @"二月", @"三月", @"四月", @"五月", @"六月", @"七月", @"八月",
+                        @"九月", @"十月", @"十一月", @"腊月", nil];
+    
+    self.chineseDays=[NSArray arrayWithObjects:
+                      @"初一", @"初二", @"初三", @"初四", @"初五", @"初六", @"初七", @"初八", @"初九", @"初十",
+                      @"十一", @"十二", @"十三", @"十四", @"十五", @"十六", @"十七", @"十八", @"十九", @"二十",
+                      @"廿一", @"廿二", @"廿三", @"廿四", @"廿五", @"廿六", @"廿七", @"廿八", @"廿九", @"三十",  nil];
 
     self.isSlide = NO;
     self.minuteInterval = 5;
@@ -406,7 +415,9 @@
 
 /// UIPickerView返回每一行数据
 - (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    return  [self.dataArray[component] objectAtIndex:row%[self.dataArray[component] count]];
+    NSString *s = [self.dataArray[component] objectAtIndex:row%[self.dataArray[component] count]];
+    NSLog(@"%@", s);
+    return  s;
 }
 /// UIPickerView返回每一行的高度
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {

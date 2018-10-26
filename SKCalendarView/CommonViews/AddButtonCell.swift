@@ -15,7 +15,7 @@ class AddButtonCell: MediaCollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         btnAdd.layer.cornerRadius = 5
-        btnAdd.layer.borderColor = UIColor.gray.cgColor
+        btnAdd.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1).cgColor
         btnAdd.layer.borderWidth = 1
     }
 

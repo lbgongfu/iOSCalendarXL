@@ -23,6 +23,7 @@
 //@property (nonatomic, strong) UILabel * titleLabel;// 日期标题
 @property (nonatomic, strong) UIImageView * rightLine;// 右边线
 @property (nonatomic, strong) UIImageView * bottomLine;// 下边线
+@property (weak, nonatomic) IBOutlet UIView *remindMark;
 
 @end
 
@@ -53,8 +54,13 @@
 #pragma mark - 创建界面
 - (void)customView
 {
+    self.remindMarkHidden = true;
+    self.remindMark.hidden = true;
     self.icon.layer.cornerRadius = 20;
     self.icon.layer.masksToBounds = true;
+    
+    self.remindMark.sakura.backgroundColor(@"accentColor");
+    self.remindMark.layer.cornerRadius = 4;
 //    // 底部view
 //    self.baseView = [UIView new];
 //    [self addSubview:self.baseView];
@@ -156,6 +162,11 @@
     }
 }
 
+- (void)setRemindMarkHidden: (BOOL)isHidden {
+    _remindMarkHidden = isHidden;
+    self.remindMark.hidden = isHidden;
+}
+
 - (void)setDateBackgroundColor:(UIColor *)dateBackgroundColor
 {
     _dateBackgroundColor = dateBackgroundColor;
@@ -179,6 +190,42 @@
 {
     _calendarTitleColor = calendarTitleColor;
     self.titleLabel.textColor = calendarTitleColor;
+}
+
+- (void)setFestivals:(NSArray *)festivals {
+    _festivals = festivals;
+    if (self.timer != NULL) {
+        [self.timer invalidate];
+        self.timer = NULL;
+    }
+    self.alpha = 1;
+    if (_festivals != NULL && _festivals.count > 0) {
+        self.calendarTitle = [_festivals objectAtIndex:0];
+        if (_festivals.count == 1) {
+            self.festivalIndex = 0;
+        } else {
+            self.festivalIndex = 1;
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:10000 target:self selector:@selector(timered:) userInfo:NULL repeats:true];
+        }
+    }
+}
+
+- (void)timered:(NSTimer *)timer {
+    [UIView animateWithDuration:1 animations:^(void) {
+        self.titleLabel.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        NSString *festival = [_festivals objectAtIndex:self.festivalIndex];
+        self.calendarTitle = festival;
+        self.festivalIndex = self.festivalIndex + 1;
+        if (self.festivalIndex == _festivals.count) {
+            self.festivalIndex = 0;
+        }
+        [UIView animateWithDuration:1 animations:^(void) {
+            self.titleLabel.alpha = 1;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }];
 }
 
 - (void)setEnableClickEffect:(BOOL)enableClickEffect

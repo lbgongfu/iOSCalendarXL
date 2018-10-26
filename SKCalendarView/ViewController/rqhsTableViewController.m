@@ -12,6 +12,7 @@
 #import "LunarDatePickerView.h"
 #import "CalendarHeader.h"
 #import "TXSakuraKit.h"
+#import "../timerPicker完结版/XXTimerPicker.h"
 
 @interface rqhsTableViewController () <SolarDatePickerViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIView *YangLiView;
@@ -21,8 +22,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *solarResultBtn;
 @property (weak, nonatomic) IBOutlet UIButton *lunarResultBtn;
 @property (weak, nonatomic) IBOutlet UILabel *HeLabel;
-@property (weak, nonatomic) SolarDatePickerView *solarDateView;
-@property (weak, nonatomic) LunarDatePickerView *lunarDateView;
+//@property (weak, nonatomic) SolarDatePickerView *solarDateView;
+//@property (weak, nonatomic) LunarDatePickerView *lunarDateView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segControl;
 @property (strong, nonatomic) UIButton *btn;
 @property (weak, nonatomic) IBOutlet UIView *rqhzView;
@@ -51,6 +52,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *imageViewCalendarHZ2;
 @property (weak, nonatomic) IBOutlet UIButton *imageViewCalendarTS1;
 @property (weak, nonatomic) IBOutlet UIButton *imageViewCalendarTS2;
+@property (weak, nonatomic) IBOutlet UIView *viewFrame;
+@property (weak, nonatomic) IBOutlet UIView *viewFrame2;
+
+@property (nonatomic, nonatomic) XXTimerPicker * picker;
 
 @end
 
@@ -63,6 +68,12 @@ static int houBtnSelected = 0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIFont *font = [UIFont boldSystemFontOfSize:17.0f];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObject:font
+                                                           forKey:NSFontAttributeName];
+    [self.segControl setTitleTextAttributes:attributes
+                               forState:UIControlStateNormal];
     
     self.navigationController.navigationBar.sakura.titleTextAttributes(@"navBarTitleColor");
     self.navigationController.navigationBar.sakura.tintColor(@"accentColor");
@@ -147,13 +158,13 @@ static int houBtnSelected = 0;
     
     [self qianBtnClick:NULL];
     
-    SolarDatePickerView *solarDateView = [[SolarDatePickerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 300)];
-    solarDateView.delegate = self;
-    solarDateView.hidden = YES;
+//    SolarDatePickerView *solarDateView = [[SolarDatePickerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 300)];
+//    solarDateView.delegate = self;
+//    solarDateView.hidden = YES;
     
-    LunarDatePickerView *lunarDateView = [[LunarDatePickerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 300)];
-    lunarDateView.delegate = self;
-    lunarDateView.hidden = YES;
+//    LunarDatePickerView *lunarDateView = [[LunarDatePickerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 300)];
+//    lunarDateView.delegate = self;
+//    lunarDateView.hidden = YES;
     
     //Button初始化显示
     NSDate *date=[NSDate date];
@@ -186,17 +197,20 @@ static int houBtnSelected = 0;
                                                             NSString *month,
                                                             NSString *day) {
         [self.lunarResultBtn setTitle: [NSString stringWithFormat:@"%@年 %@ %@",year,month,day] forState: UIControlStateNormal];
-        [self.secondDateBtn setTitle: [NSString stringWithFormat:@"%@年 %@ %@",year,month,day] forState: UIControlStateNormal];
+//        [self.secondDateBtn setTitle: [NSString stringWithFormat:@"%@年 %@ %@",year,month,day] forState: UIControlStateNormal];
+        [self.secondDateBtn setTitle: solarDate forState: UIControlStateNormal];
     }];
     
     //加载dataView
-    solarDateView.title = @"请选择时间";
-    [self.view addSubview:solarDateView];
-    self.solarDateView = solarDateView;
+//    solarDateView.title = @"请选择时间";
+//    [self.view addSubview:solarDateView];
+//    self.solarDateView = solarDateView;
     
-    lunarDateView.title = @"请选择时间";
-    [self.view addSubview:lunarDateView];
-    self.lunarDateView = lunarDateView;
+//    lunarDateView.title = @"请选择时间";
+//    [self.view addSubview:lunarDateView];
+//    self.lunarDateView = lunarDateView;
+    self.viewFrame.hidden = true;
+    self.viewFrame2.hidden = true;
 }
 
 -(void)keyboardHide:(UITapGestureRecognizer*)tap{
@@ -236,52 +250,69 @@ static int houBtnSelected = 0;
 // 显示
 - (IBAction)solarResultBtnClick:(id)sender {
     self.btn.hidden = NO;
-    self.solarDateView.hidden = NO;
-    self.solarDateView.date = solarDate;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
-        [self.solarDateView show];
-    }];
+//    self.solarDateView.hidden = NO;
+//    self.solarDateView.date = solarDate;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
+//        [self.solarDateView show];
+//    }];
+}
+
+-(XXTimerPicker *)picker
+{
+    if (_picker) {
+        return _picker;
+    }
+    _picker = [XXTimerPicker getChooseTimerView];
+    [_picker main];
+//    [_picker setSaveBlock:^(NSString *year, NSString *month, NSString *day){
+//        NSLog(@"selected date: %@-%@-%@", year, month, day);
+//        self.picker.hidden = true;
+//    }];
+    [self.view.window addSubview:_picker];
+    return _picker;
 }
 
 - (IBAction)lunarResultBtnClick:(id)sender {
     self.btn.hidden = NO;
-    self.lunarDateView.hidden = NO;
-    self.lunarDateView.date = lunarDate;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.lunarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
-        [self.lunarDateView show];
-    }];
+//    self.lunarDateView.hidden = NO;
+//    self.lunarDateView.date = lunarDate;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.lunarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
+//        [self.lunarDateView show];
+//    }];
+    [self picker];
+    [_picker show];
 }
 
 - (IBAction)firstDateBtnClick:(id)sender {
     self.btn.hidden = NO;
-    self.solarDateView.hidden = NO;
-    self.solarDateView.date = solarDate;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
-        [self.solarDateView show];
-    }];
+//    self.solarDateView.hidden = NO;
+//    self.solarDateView.date = solarDate;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
+//        [self.solarDateView show];
+//    }];
 }
 
 - (IBAction)secondDateBtnClick:(id)sender {
     self.btn.hidden = NO;
-    self.lunarDateView.hidden = NO;
-    self.lunarDateView.date = lunarDate;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.lunarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
-        [self.lunarDateView show];
-    }];
+//    self.lunarDateView.hidden = NO;
+//    self.lunarDateView.date = lunarDate;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.lunarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
+//        [self.lunarDateView show];
+//    }];
 }
 
 - (IBAction)selectDateBtnClick:(id)sender {
     self.btn.hidden = NO;
-    self.solarDateView.hidden = NO;
-    self.solarDateView.date = solarDate;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
-        [self.solarDateView show];
-    }];
+//    self.solarDateView.hidden = NO;
+//    self.solarDateView.date = solarDate;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height - 300, self.view.frame.size.width, 300);
+//        [self.solarDateView show];
+//    }];
 }
 
 
@@ -314,30 +345,31 @@ static int houBtnSelected = 0;
     self.YangLiLabel.alpha = 1;
     self.YingLiLabel.alpha = 1;
     self.JianGeLabel.alpha = 1;
+    self.viewFrame2.hidden = false;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *firstDate = [dateFormatter dateFromString:solarDate];
-    NSString *tempSecondDate = lunarDate;
-    
-    NSArray *array = [tempSecondDate componentsSeparatedByString:@"-"]; //从字符A中分隔成2个元素的数组
-    NSString *lunarYear, *lunarMonth, *lunarDay;
-    if([array count] >= 3){
-        lunarYear = array[0];
-        lunarMonth = array[1];
-        lunarDay = array[2];
-    }
-    
-    Lunar *l = [[Lunar alloc]initWithYear:[lunarYear intValue]
-                                 andMonth:[lunarMonth intValue]
-                                   andDay:[lunarDay intValue]];
-    //得出阳历
-    Solar *s = [CalendarDisplyManager obtainSolarFromLunar:l];
-    
-    NSDate *secondDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"%i-%i-%i",s.solarYear,s.solarMonth,s.solarDay]];
+//    NSString *tempSecondDate = lunarDate;
+//
+//    NSArray *array = [tempSecondDate componentsSeparatedByString:@"-"]; //从字符A中分隔成2个元素的数组
+//    NSString *lunarYear, *lunarMonth, *lunarDay;
+//    if([array count] >= 3){
+//        lunarYear = array[0];
+//        lunarMonth = array[1];
+//        lunarDay = array[2];
+//    }
+//
+//    Lunar *l = [[Lunar alloc]initWithYear:[lunarYear intValue]
+//                                 andMonth:[lunarMonth intValue]
+//                                   andDay:[lunarDay intValue]];
+//    //得出阳历
+//    Solar *s = [CalendarDisplyManager obtainSolarFromLunar:l];
+//
+//    NSDate *secondDate = [dateFormatter dateFromString:[NSString stringWithFormat:@"%i-%i-%i",s.solarYear,s.solarMonth,s.solarDay]];
     
     //secondDate = [NSString stringWithFormat:@"%i-%i-%i",s.solarYear,s.solarMonth,s.solarDay];
-    
+    NSDate *secondDate = [dateFormatter dateFromString:lunarDate];;
     NSTimeInterval time = [secondDate timeIntervalSinceDate:firstDate];
     
     int days = ((int)time)/(3600*24);
@@ -348,11 +380,12 @@ static int houBtnSelected = 0;
     self.YangLiLabel.textAlignment = NSTextAlignmentLeft;
     self.YangLiLabel.numberOfLines = 0;
     
-    [CalendarDisplyManager resultWithLunar:l resultFormat:^(NSString *year,
-                                                            NSString *month,
-                                                            NSString *day) {
-        [self.YingLiLabel setText:[NSString stringWithFormat:@"阴历%@年 %@ %@",year,month,day]];
-    }];
+//    [CalendarDisplyManager resultWithLunar:l resultFormat:^(NSString *year,
+//                                                            NSString *month,
+//                                                            NSString *day) {
+//        [self.YingLiLabel setText:[NSString stringWithFormat:@"阳历历%@年 %@ %@",year,month,day]];
+//    }];
+    [self.YingLiLabel setText:[NSString stringWithFormat:@"阳历%@", [dateFormatter stringFromDate: secondDate]]];
     self.YingLiLabel.textAlignment = NSTextAlignmentLeft;
     self.YingLiLabel.numberOfLines = 0;
     
@@ -375,10 +408,10 @@ static int houBtnSelected = 0;
     [self.selectDateBtn setTitle: timer forState: UIControlStateNormal];
     
     self.btn.hidden = YES;
-    self.solarDateView.hidden = YES;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 300);
-    }];
+//    self.solarDateView.hidden = YES;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 300);
+//    }];
     
     //阳历转阴历
     NSString *string =timer;
@@ -440,15 +473,16 @@ static int houBtnSelected = 0;
                                                              NSString *month,
                                                              NSString *day) {
         [self.lunarResultBtn setTitle: [NSString stringWithFormat:@"%@年 %@ %@",year,month,day] forState: UIControlStateNormal];
-        [self.secondDateBtn setTitle: [NSString stringWithFormat:@"%@年 %@ %@",year,month,day] forState: UIControlStateNormal];
+//        [self.secondDateBtn setTitle: [NSString stringWithFormat:@"%@年 %@ %@",year,month,day] forState: UIControlStateNormal];
+        [self.secondDateBtn setTitle: timer forState: UIControlStateNormal];
     }];
     
     //    [self.lunarResultBtn setTitle: timer forState: UIControlStateNormal];
     self.btn.hidden = YES;
-    self.lunarDateView.hidden = YES;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.lunarDateView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 300);
-    }];
+//    self.lunarDateView.hidden = YES;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.lunarDateView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 300);
+//    }];
 }
 - (IBAction)qianBtnClick:(id)sender {
 //    [self.qianBtn setTitleColor:[UIColor colorWithRed:255/255.0 green:103/255.0 blue:0/255.0 alpha:1] forState:UIControlStateNormal];
@@ -479,6 +513,7 @@ static int houBtnSelected = 0;
     self.TSYingLiLabel.alpha = 1;
     self.TSYangLi.alpha = 1;
     self.TSYingLi.alpha = 1;
+    self.viewFrame.hidden = false;
     
     if([self.JianGeTextField.text isEqual:@"请输入间隔天数"] || [self.JianGeTextField.text isEqual:@""])
     {
@@ -502,7 +537,8 @@ static int houBtnSelected = 0;
             NSDate *theDateSolar;
             if(dis!=0){
                 NSTimeInterval  oneDay = 24*60*60*1;  //1天的长度
-                theDateSolar = [nowDate initWithTimeIntervalSinceNow: +oneDay*dis ];
+//                theDateSolar = [nowDate initWithTimeIntervalSinceNow: +oneDay*dis ];
+                theDateSolar = [nowDate initWithTimeInterval:+oneDay * dis sinceDate:nowDate];
                 //or
                 //theDate = [nowDate initWithTimeIntervalSinceNow: -oneDay*dis ];
             }else{
@@ -546,7 +582,8 @@ static int houBtnSelected = 0;
                 NSTimeInterval  oneDay = 24*60*60*1;  //1天的长度
                 //                theDateSolar = [nowDate initWithTimeIntervalSinceNow: +oneDay*dis ];
                 //or
-                theDateSolar = [nowDate initWithTimeIntervalSinceNow: -oneDay*dis ];
+//                theDateSolar = [nowDate initWithTimeIntervalSinceNow: -oneDay*dis ];
+                theDateSolar = [nowDate initWithTimeInterval:-oneDay*dis sinceDate:nowDate];
             }else{
                 theDateSolar = nowDate;
             }
@@ -585,12 +622,12 @@ static int houBtnSelected = 0;
 - (void)datePickerViewCancelBtnClickDelegate {
     NSLog(@"取消点击");
     self.btn.hidden = YES;
-    self.solarDateView.hidden = YES;
-    self.lunarDateView.hidden = YES;
-    [UIView animateWithDuration:0.3 animations:^{
-        self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 300);
-        self.lunarDateView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 300);
-    }];
+//    self.solarDateView.hidden = YES;
+//    self.lunarDateView.hidden = YES;
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.solarDateView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 300);
+//        self.lunarDateView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 300);
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {

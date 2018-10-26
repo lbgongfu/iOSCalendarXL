@@ -130,12 +130,26 @@ class AudioRecorderViewController: UINavigationController {
             timeTimer?.invalidate()
             
             if recorder.isRecording {
+                do {
+                    try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                    try AVAudioSession.sharedInstance().setActive(true)
+                }
+                catch let error as NSError {
+                    NSLog("Error: \(error)")
+                }
                 recorder.stop()
             } else {
                 milliseconds = 0
                 timeLabel.text = "00:00.00"
                 timeTimer = Timer.scheduledTimer(timeInterval: 0.0167, target: self, selector: #selector(updateTimeLabel(_:)), userInfo: nil, repeats: true)
                 recorder.deleteRecording()
+                do {
+                    try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord)
+                    try AVAudioSession.sharedInstance().setActive(true)
+                }
+                catch let error as NSError {
+                    NSLog("Error: \(error)")
+                }
                 recorder.record()
             }
             

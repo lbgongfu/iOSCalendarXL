@@ -64,6 +64,7 @@
 		A63E6BFB2148D69B006FF099 /* TXSakuraBarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = A63E6BDF2148D69A006FF099 /* TXSakuraBarItem.m */; };
 		A63E6BFC2148D69B006FF099 /* TXSakura.m in Sources */ = {isa = PBXBuildFile; fileRef = A63E6BE52148D69A006FF099 /* TXSakura.m */; };
 		A63E6BFD2148D69B006FF099 /* TXSakuraManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A63E6BE72148D69B006FF099 /* TXSakuraManager.m */; };
+		A6444A3D215CD14000C4A5FB /* TianGanDiZhi.m in Sources */ = {isa = PBXBuildFile; fileRef = A6444A3C215CD14000C4A5FB /* TianGanDiZhi.m */; };
 		A6474134212E5F3D008C8EC0 /* AudioClipCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6474133212E5F3D008C8EC0 /* AudioClipCell.swift */; };
 		A6474136212E5F9C008C8EC0 /* AudioClipCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6474135212E5F9C008C8EC0 /* AudioClipCell.xib */; };
 		A6474138212E7286008C8EC0 /* CreateRemindViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6474137212E7286008C8EC0 /* CreateRemindViewController.swift */; };
@@ -83,6 +84,19 @@
 		A6653F8D214A59F500687B51 /* tianlan.json in Resources */ = {isa = PBXBuildFile; fileRef = A6653F83214A59F400687B51 /* tianlan.json */; };
 		A6653F8E214A59F500687B51 /* zhuqin.json in Resources */ = {isa = PBXBuildFile; fileRef = A6653F84214A59F400687B51 /* zhuqin.json */; };
 		A6653F8F214A59F500687B51 /* xihong.json in Resources */ = {isa = PBXBuildFile; fileRef = A6653F85214A59F500687B51 /* xihong.json */; };
+		A680C05521707E8A00CC1FF0 /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A680C04F21707E8800CC1FF0 /* DateUtils.m */; };
+		A680C05621707E8A00CC1FF0 /* CBLunarUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A680C05121707E8900CC1FF0 /* CBLunarUtil.m */; };
+		A680C05721707E8A00CC1FF0 /* LJsonFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = A680C05221707E8A00CC1FF0 /* LJsonFileUtils.m */; };
+		A68F6B44216DC83B008F01EF /* RemindDataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68F6B43216DC83B008F01EF /* RemindDataBase.swift */; };
+		A68F6B57216DE6A6008F01EF /* ChineseCalendarDB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A68F6B48216DE6A5008F01EF /* ChineseCalendarDB.cpp */; };
+		A68F6B58216DE6A6008F01EF /* SolarDate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A68F6B4A216DE6A5008F01EF /* SolarDate.cpp */; };
+		A68F6B59216DE6A6008F01EF /* ChineseDate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A68F6B4D216DE6A5008F01EF /* ChineseDate.cpp */; };
+		A68F6B5A216DE6A6008F01EF /* IDJChineseCalendar.mm in Sources */ = {isa = PBXBuildFile; fileRef = A68F6B4F216DE6A5008F01EF /* IDJChineseCalendar.mm */; };
+		A68F6B5B216DE6A6008F01EF /* IDJCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = A68F6B52216DE6A5008F01EF /* IDJCalendar.m */; };
+		A68F6B5C216DE6A6008F01EF /* IDJCalendarUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = A68F6B53216DE6A5008F01EF /* IDJCalendarUtil.mm */; };
+		A68F6B5D216DE6A6008F01EF /* XXTimerPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A68F6B55216DE6A5008F01EF /* XXTimerPicker.m */; };
+		A68F6B5E216DE6A6008F01EF /* XXTimerPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = A68F6B56216DE6A5008F01EF /* XXTimerPicker.xib */; };
+		A68F6B60216DF81B008F01EF /* DateConverterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68F6B5F216DF81A008F01EF /* DateConverterViewController.swift */; };
 		A699B652214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = A699B650214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m */; };
 		A699B658214FB8EE00E5F01D /* SKCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A699B656214FB8EE00E5F01D /* SKCollectionViewCell.xib */; };
 		A699B6B5215348E500E5F01D /* RemindTableViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A699B6B4215348E500E5F01D /* RemindTableViewHelper.swift */; };
@@ -90,6 +104,7 @@
 		A699B6BF2154A73100E5F01D /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A699B6BE2154A73100E5F01D /* TodayViewController.swift */; };
 		A699B6C22154A73100E5F01D /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A699B6C02154A73100E5F01D /* MainInterface.storyboard */; };
 		A699B6C62154A73200E5F01D /* SKCalendarViewWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A699B6BA2154A73100E5F01D /* SKCalendarViewWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A6F9831A2170942400EA0A3B /* LunarCore.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F983182170942300EA0A3B /* LunarCore.m */; };
 		E46BB91A1E8B678400A1E1C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BB9191E8B678400A1E1C7 /* main.m */; };
 		E46BB91D1E8B678400A1E1C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E46BB91C1E8B678400A1E1C7 /* AppDelegate.m */; };
 		E46BB9231E8B678400A1E1C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E46BB9211E8B678400A1E1C7 /* Main.storyboard */; };
@@ -220,6 +235,8 @@
 		A63E6BE62148D69B006FF099 /* TXSakuraManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXSakuraManager.h; sourceTree = "<group>"; };
 		A63E6BE72148D69B006FF099 /* TXSakuraManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXSakuraManager.m; sourceTree = "<group>"; };
 		A63E6BE82148D69B006FF099 /* TXSakura.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TXSakura.h; sourceTree = "<group>"; };
+		A6444A3B215CCECA00C4A5FB /* TianGanDiZhi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TianGanDiZhi.h; sourceTree = "<group>"; };
+		A6444A3C215CD14000C4A5FB /* TianGanDiZhi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TianGanDiZhi.m; sourceTree = "<group>"; };
 		A6474130212E40C3008C8EC0 /* SKCalendarView-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SKCalendarView-Bridging-Header.h"; sourceTree = "<group>"; };
 		A6474133212E5F3D008C8EC0 /* AudioClipCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioClipCell.swift; sourceTree = "<group>"; };
 		A6474135212E5F9C008C8EC0 /* AudioClipCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioClipCell.xib; sourceTree = "<group>"; };
@@ -240,6 +257,29 @@
 		A6653F83214A59F400687B51 /* tianlan.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tianlan.json; sourceTree = "<group>"; };
 		A6653F84214A59F400687B51 /* zhuqin.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = zhuqin.json; sourceTree = "<group>"; };
 		A6653F85214A59F500687B51 /* xihong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = xihong.json; sourceTree = "<group>"; };
+		A680C04F21707E8800CC1FF0 /* DateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtils.m; sourceTree = "<group>"; };
+		A680C05021707E8900CC1FF0 /* CBLunarUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLunarUtil.h; sourceTree = "<group>"; };
+		A680C05121707E8900CC1FF0 /* CBLunarUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBLunarUtil.m; sourceTree = "<group>"; };
+		A680C05221707E8A00CC1FF0 /* LJsonFileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LJsonFileUtils.m; sourceTree = "<group>"; };
+		A680C05321707E8A00CC1FF0 /* DateUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateUtils.h; sourceTree = "<group>"; };
+		A680C05421707E8A00CC1FF0 /* LJsonFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LJsonFileUtils.h; sourceTree = "<group>"; };
+		A68F6B43216DC83B008F01EF /* RemindDataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindDataBase.swift; sourceTree = "<group>"; };
+		A68F6B46216DE6A5008F01EF /* XXTimerPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XXTimerPicker.h; sourceTree = "<group>"; };
+		A68F6B48216DE6A5008F01EF /* ChineseCalendarDB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChineseCalendarDB.cpp; sourceTree = "<group>"; };
+		A68F6B49216DE6A5008F01EF /* SolarDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SolarDate.h; sourceTree = "<group>"; };
+		A68F6B4A216DE6A5008F01EF /* SolarDate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SolarDate.cpp; sourceTree = "<group>"; };
+		A68F6B4B216DE6A5008F01EF /* ChineseDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseDate.h; sourceTree = "<group>"; };
+		A68F6B4C216DE6A5008F01EF /* ChineseCalendarDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChineseCalendarDB.h; sourceTree = "<group>"; };
+		A68F6B4D216DE6A5008F01EF /* ChineseDate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChineseDate.cpp; sourceTree = "<group>"; };
+		A68F6B4F216DE6A5008F01EF /* IDJChineseCalendar.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IDJChineseCalendar.mm; sourceTree = "<group>"; };
+		A68F6B50216DE6A5008F01EF /* IDJCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDJCalendar.h; sourceTree = "<group>"; };
+		A68F6B51216DE6A5008F01EF /* IDJChineseCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDJChineseCalendar.h; sourceTree = "<group>"; };
+		A68F6B52216DE6A5008F01EF /* IDJCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDJCalendar.m; sourceTree = "<group>"; };
+		A68F6B53216DE6A5008F01EF /* IDJCalendarUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IDJCalendarUtil.mm; sourceTree = "<group>"; };
+		A68F6B54216DE6A5008F01EF /* IDJCalendarUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDJCalendarUtil.h; sourceTree = "<group>"; };
+		A68F6B55216DE6A5008F01EF /* XXTimerPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XXTimerPicker.m; sourceTree = "<group>"; };
+		A68F6B56216DE6A5008F01EF /* XXTimerPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = XXTimerPicker.xib; sourceTree = "<group>"; };
+		A68F6B5F216DF81A008F01EF /* DateConverterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateConverterViewController.swift; sourceTree = "<group>"; };
 		A699B650214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+ZWPlaceHolder.m"; sourceTree = "<group>"; };
 		A699B651214F4B2000E5F01D /* UITextView+ZWPlaceHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+ZWPlaceHolder.h"; sourceTree = "<group>"; };
 		A699B656214FB8EE00E5F01D /* SKCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SKCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -249,6 +289,8 @@
 		A699B6BE2154A73100E5F01D /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		A699B6C12154A73100E5F01D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		A699B6C32154A73100E5F01D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A6F983182170942300EA0A3B /* LunarCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LunarCore.m; sourceTree = "<group>"; };
+		A6F983192170942300EA0A3B /* LunarCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LunarCore.h; sourceTree = "<group>"; };
 		D40120A811C0307FFDDA7152 /* Pods-SKCalendarView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKCalendarView.release.xcconfig"; path = "Pods/Target Support Files/Pods-SKCalendarView/Pods-SKCalendarView.release.xcconfig"; sourceTree = "<group>"; };
 		E46BB9151E8B678400A1E1C7 /* SKCalendarView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKCalendarView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E46BB9191E8B678400A1E1C7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -318,6 +360,7 @@
 				A6653F6F2149250800687B51 /* SelectRingViewController.swift */,
 				A6653F7A214A420D00687B51 /* SettingsViewController.swift */,
 				A699B6B4215348E500E5F01D /* RemindTableViewHelper.swift */,
+				A68F6B5F216DF81A008F01EF /* DateConverterViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -465,6 +508,8 @@
 				A63E6BAF2147A344006FF099 /* ThemeCollectionViewCell.xib */,
 				A6653F7121493D3100687B51 /* AddButtonCell.swift */,
 				A6653F7221493D3100687B51 /* AddButtonCell.xib */,
+				A6444A3B215CCECA00C4A5FB /* TianGanDiZhi.h */,
+				A6444A3C215CD14000C4A5FB /* TianGanDiZhi.m */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -488,6 +533,44 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		A68F6B45216DE6A5008F01EF /* timerPicker完结版 */ = {
+			isa = PBXGroup;
+			children = (
+				A68F6B46216DE6A5008F01EF /* XXTimerPicker.h */,
+				A68F6B47216DE6A5008F01EF /* solar_chinese_calendar */,
+				A68F6B4E216DE6A5008F01EF /* datepicker */,
+				A68F6B55216DE6A5008F01EF /* XXTimerPicker.m */,
+				A68F6B56216DE6A5008F01EF /* XXTimerPicker.xib */,
+			);
+			path = "timerPicker完结版";
+			sourceTree = "<group>";
+		};
+		A68F6B47216DE6A5008F01EF /* solar_chinese_calendar */ = {
+			isa = PBXGroup;
+			children = (
+				A68F6B48216DE6A5008F01EF /* ChineseCalendarDB.cpp */,
+				A68F6B49216DE6A5008F01EF /* SolarDate.h */,
+				A68F6B4A216DE6A5008F01EF /* SolarDate.cpp */,
+				A68F6B4B216DE6A5008F01EF /* ChineseDate.h */,
+				A68F6B4C216DE6A5008F01EF /* ChineseCalendarDB.h */,
+				A68F6B4D216DE6A5008F01EF /* ChineseDate.cpp */,
+			);
+			path = solar_chinese_calendar;
+			sourceTree = "<group>";
+		};
+		A68F6B4E216DE6A5008F01EF /* datepicker */ = {
+			isa = PBXGroup;
+			children = (
+				A68F6B4F216DE6A5008F01EF /* IDJChineseCalendar.mm */,
+				A68F6B50216DE6A5008F01EF /* IDJCalendar.h */,
+				A68F6B51216DE6A5008F01EF /* IDJChineseCalendar.h */,
+				A68F6B52216DE6A5008F01EF /* IDJCalendar.m */,
+				A68F6B53216DE6A5008F01EF /* IDJCalendarUtil.mm */,
+				A68F6B54216DE6A5008F01EF /* IDJCalendarUtil.h */,
+			);
+			path = datepicker;
+			sourceTree = "<group>";
+		};
 		A699B64F214F4B2000E5F01D /* ZWPlaceHolder */ = {
 			isa = PBXGroup;
 			children = (
@@ -505,6 +588,15 @@
 				A699B6C32154A73100E5F01D /* Info.plist */,
 			);
 			path = SKCalendarViewWidget;
+			sourceTree = "<group>";
+		};
+		A6F983172170942300EA0A3B /* LunarCore */ = {
+			isa = PBXGroup;
+			children = (
+				A6F983182170942300EA0A3B /* LunarCore.m */,
+				A6F983192170942300EA0A3B /* LunarCore.h */,
+			);
+			path = LunarCore;
 			sourceTree = "<group>";
 		};
 		E46BB90C1E8B678300A1E1C7 = {
@@ -530,6 +622,8 @@
 		E46BB9171E8B678400A1E1C7 /* SKCalendarView */ = {
 			isa = PBXGroup;
 			children = (
+				A6F983172170942300EA0A3B /* LunarCore */,
+				A68F6B45216DE6A5008F01EF /* timerPicker完结版 */,
 				A699B64F214F4B2000E5F01D /* ZWPlaceHolder */,
 				A6653F75214985FC00687B51 /* Resources */,
 				A63E6BBB2148D69A006FF099 /* SakuraKit */,
@@ -546,6 +640,7 @@
 				E46BB9261E8B678400A1E1C7 /* LaunchScreen.storyboard */,
 				E46BB9291E8B678400A1E1C7 /* Info.plist */,
 				E46BB9181E8B678400A1E1C7 /* Supporting Files */,
+				A68F6B43216DC83B008F01EF /* RemindDataBase.swift */,
 			);
 			path = SKCalendarView;
 			sourceTree = "<group>";
@@ -590,6 +685,12 @@
 		E49B05061E8F76A8007D230C /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				A680C05021707E8900CC1FF0 /* CBLunarUtil.h */,
+				A680C05121707E8900CC1FF0 /* CBLunarUtil.m */,
+				A680C05321707E8A00CC1FF0 /* DateUtils.h */,
+				A680C04F21707E8800CC1FF0 /* DateUtils.m */,
+				A680C05421707E8A00CC1FF0 /* LJsonFileUtils.h */,
+				A680C05221707E8A00CC1FF0 /* LJsonFileUtils.m */,
 				E49B05071E8F76A8007D230C /* SKConstant.h */,
 				E49B05081E8F76A8007D230C /* SKDateSecurity.h */,
 				E49B05091E8F76A8007D230C /* SKDateSecurity.m */,
@@ -733,6 +834,7 @@
 				A6653F7421493D3100687B51 /* AddButtonCell.xib in Resources */,
 				A63E6B8C21390BEB006FF099 /* RemindCell2TableViewCell.xib in Resources */,
 				E46BB9231E8B678400A1E1C7 /* Main.storyboard in Resources */,
+				A68F6B5E216DE6A6008F01EF /* XXTimerPicker.xib in Resources */,
 				A6653F8C214A59F500687B51 /* zhusha.json in Resources */,
 				A6653F8D214A59F500687B51 /* tianlan.json in Resources */,
 				A63E6B95213ADD8A006FF099 /* LocationNameCell.xib in Resources */,
@@ -814,18 +916,23 @@
 				A615954321378E160061E828 /* RemindDetailViewControllerTableViewController.swift in Sources */,
 				A63E6BEF2148D69B006FF099 /* TXSakuraImageView.m in Sources */,
 				E46BB91D1E8B678400A1E1C7 /* AppDelegate.m in Sources */,
+				A68F6B60216DF81B008F01EF /* DateConverterViewController.swift in Sources */,
 				A63E6BB32147A5B4006FF099 /* ThemeViewController.swift in Sources */,
 				A63E6BF32148D69B006FF099 /* TXSakuraLayer.m in Sources */,
 				A63E6BF22148D69B006FF099 /* TXSakuraNavigationBar.m in Sources */,
+				A68F6B5B216DE6A6008F01EF /* IDJCalendar.m in Sources */,
 				A63E6B8B21390BEB006FF099 /* RemindCell2TableViewCell.swift in Sources */,
 				A63E6BF72148D69B006FF099 /* TXSakuraIndicatorView.m in Sources */,
 				872C0A31211F304A00D813AD /* wnlViewController.m in Sources */,
+				A68F6B44216DC83B008F01EF /* RemindDataBase.swift in Sources */,
 				A63E6BF42148D69B006FF099 /* TXSakuraSwitch.m in Sources */,
 				A63E6BEE2148D69B006FF099 /* TXSakuraTableView.m in Sources */,
 				A626E70F2130DAFD008AD935 /* MediaCollectionViewCell.swift in Sources */,
+				A68F6B5A216DE6A6008F01EF /* IDJChineseCalendar.mm in Sources */,
 				A6474138212E7286008C8EC0 /* CreateRemindViewController.swift in Sources */,
 				A62922E5212FD47F0032E1E9 /* RemindCell.swift in Sources */,
 				A63E6BFA2148D69B006FF099 /* TXSakuraTextComponent.m in Sources */,
+				A68F6B5D216DE6A6008F01EF /* XXTimerPicker.m in Sources */,
 				A63E6BEA2148D69B006FF099 /* TXSakuraBar.m in Sources */,
 				A63E6BF62148D69B006FF099 /* TXSakuraView.m in Sources */,
 				A626E72921330F1F008AD935 /* AudioRecorderViewController.swift in Sources */,
@@ -837,13 +944,17 @@
 				A63E6BF12148D69B006FF099 /* TXSakuraTrash.m in Sources */,
 				E49B05141E8F76A8007D230C /* SKCalendarCollectionViewCell.m in Sources */,
 				A63E6BF92148D69B006FF099 /* TXSakuraApplication.m in Sources */,
+				A68F6B5C216DE6A6008F01EF /* IDJCalendarUtil.mm in Sources */,
+				A680C05521707E8A00CC1FF0 /* DateUtils.m in Sources */,
 				878B893E2129BE3C00BB970B /* SolarDatePickerView.m in Sources */,
 				A699B652214F4B2000E5F01D /* UITextView+ZWPlaceHolder.m in Sources */,
 				A62922E2212FB3230032E1E9 /* RemindViewController.swift in Sources */,
 				A63E6BA321413025006FF099 /* RemindCell2.m in Sources */,
+				A680C05621707E8A00CC1FF0 /* CBLunarUtil.m in Sources */,
 				A63E6BE92148D69B006FF099 /* TXSakuraButton.m in Sources */,
 				872C0A44211F33EE00D813AD /* CalendarDisplyManager.m in Sources */,
 				A63E6BFC2148D69B006FF099 /* TXSakura.m in Sources */,
+				A68F6B58216DE6A6008F01EF /* SolarDate.cpp in Sources */,
 				8723BA0C21356FE300AF7172 /* rqhsTableViewController.m in Sources */,
 				E49B05111E8F76A8007D230C /* SKCalendarManage.m in Sources */,
 				A63E6B9121397B96006FF099 /* SelectLocationViewController.swift in Sources */,
@@ -853,16 +964,21 @@
 				A626E70D21304C91008AD935 /* LXCollectionViewLeftOrRightAlignedLayout.m in Sources */,
 				A63E6BB02147A345006FF099 /* ThemeCollectionViewCell.swift in Sources */,
 				872C0A47211F33EE00D813AD /* Lunar.m in Sources */,
+				A6F9831A2170942400EA0A3B /* LunarCore.m in Sources */,
 				A63E6B94213ADD8A006FF099 /* LocationNameCell.swift in Sources */,
 				E49B05151E8F76A8007D230C /* SKCalendarView.m in Sources */,
 				A63E6BF02148D69B006FF099 /* TXSakuraController.m in Sources */,
 				872C0A45211F33EE00D813AD /* LunarSolarTransform.m in Sources */,
 				878B89442129C7AC00BB970B /* LunarDatePickerView.m in Sources */,
+				A68F6B57216DE6A6008F01EF /* ChineseCalendarDB.cpp in Sources */,
 				A6653F7321493D3100687B51 /* AddButtonCell.swift in Sources */,
 				E46BB91A1E8B678400A1E1C7 /* main.m in Sources */,
+				A680C05721707E8A00CC1FF0 /* LJsonFileUtils.m in Sources */,
 				A6653F702149250800687B51 /* SelectRingViewController.swift in Sources */,
 				A63E6BF82148D69B006FF099 /* TXSakuraPageControl.m in Sources */,
+				A68F6B59216DE6A6008F01EF /* ChineseDate.cpp in Sources */,
 				A63E6BFB2148D69B006FF099 /* TXSakuraBarItem.m in Sources */,
+				A6444A3D215CD14000C4A5FB /* TianGanDiZhi.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

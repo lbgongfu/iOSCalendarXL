@@ -18,7 +18,7 @@ class ImageCell: MediaCollectionViewCell {
         clipsToBounds = false
         image.layer.cornerRadius = 8
         image.layer.masksToBounds = true
-        image.layer.borderColor = UIColor.gray.cgColor
+        image.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1).cgColor
         image.layer.borderWidth = 1
     }
 

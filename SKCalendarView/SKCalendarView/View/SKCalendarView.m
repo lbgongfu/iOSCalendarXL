@@ -12,6 +12,9 @@
 #import "SKWeekCollectionViewCell.h"
 #import "SKCalendarManage.h"
 #import "TXSakuraKit.h"
+#import "SKCalendarView-Swift.h"
+#import "../../LunarCore/LunarCore.h"
+#import "../Tool/CBLunarUtil.h"
 
 @interface SKCalendarView () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, strong) UICollectionView * weekCollectionView;
@@ -21,8 +24,10 @@
 @property (nonatomic, strong) NSDate * theDate;// 当前日期
 @property (nonatomic, assign) NSUInteger theYear;// 本年
 @property (nonatomic, assign) NSUInteger theDayInMonth;// 今天在本月所处位置
-@property (nonatomic, assign) NSInteger selectedRow;// 选择的日期
+//@property (nonatomic, assign) NSInteger selectedRow;// 选择的日期
 @property (nonatomic, strong) NSString * displayChineseDate;//已显示的农历日期&节日&节气
+@property (nonatomic, strong) NSCalendar *calendar;
+@property (nonatomic, strong) NSDateComponents *dateComponents;
 
 @end
 
@@ -95,10 +100,28 @@
     return _todayInMonth;
 }
 
+- (void)returnToToday {
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    NSDate *now = [NSDate new];
+    NSString *day = [NSString stringWithFormat:@"%ld", (long)[calendar component:NSCalendarUnitDay fromDate:now]];
+    for (NSInteger i = 0; i < self.calendarManage.calendarDate.count; i++) {
+        NSString *t = [NSString stringWithFormat:@"%@", [self.calendarManage.calendarDate objectAtIndex:i]];
+        if ([day isEqualToString:t]) {
+            self.selectedRow = i;
+            [self.calendarCollectionView reloadData];
+            if ([self.delegate respondsToSelector:@selector(selectDateWithRow:)]) {
+                [self.delegate selectDateWithRow:i];
+            }
+            break;
+        }
+    }
+}
 
 #pragma mark - 创建界面
 - (void)customView
 {
+    self.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    self.dateComponents = [[NSDateComponents alloc] init];
     // 周
     UICollectionViewFlowLayout * layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -254,12 +277,22 @@
 {
     _checkLastMonth = checkLastMonth;
     if (checkLastMonth == YES) {
+        
+        NSInteger prevDay = [[self.calendarManage.calendarDate objectAtIndex:self.selectedRow] integerValue];
+        NSLog(@"selected date index: %d", prevDay);
+        
         self.selectedRow = -1;// 重置已选日期
         NSInteger hours = (self.calendarManage.days - 1) * -24;
         NSDate * date = [NSDate dateWithTimeInterval:hours * 60 * 60 sinceDate:self.theDate];
         [self.calendarManage checkThisMonthRecordFromToday:date];
         self.theDate = date;
         self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(self.calendarManage.month)];
+        
+        self.selectedRow = [self.calendarManage.calendarDate indexOfObject:@(prevDay)];
+        while (self.selectedRow == NSNotFound) {
+            self.selectedRow = [self.calendarManage.calendarDate indexOfObject:@(--prevDay)];
+        }
+        
         [self.calendarCollectionView reloadData];
         [self reloadExternalDate];
     }
@@ -269,7 +302,11 @@
 {
     _checkNextMonth = checkNextMonth;
     if (checkNextMonth == YES) {
-        self.selectedRow = -1;// 重置已选日期
+        
+        NSInteger prevDay = [[self.calendarManage.calendarDate objectAtIndex:self.selectedRow] integerValue];
+        NSLog(@"selected date index: %d", prevDay);
+        
+//        self.selectedRow = -1;// 重置已选日期
         NSUInteger todayInMonth = self.calendarManage.todayInMonth;
         if (todayInMonth > 1) {
             todayInMonth = self.calendarManage.todayInMonth - self.calendarManage.dayInWeek + 2;
@@ -280,6 +317,12 @@
         [self.calendarManage checkThisMonthRecordFromToday:date];
         self.theDate = date;
         self.monthBackgroundLabel.text = [NSString stringWithFormat:@"%@", @(self.calendarManage.month)];
+        
+        self.selectedRow = [self.calendarManage.calendarDate indexOfObject:@(prevDay)];
+        while (self.selectedRow == NSNotFound) {
+            self.selectedRow = [self.calendarManage.calendarDate indexOfObject:@(--prevDay)];
+        }
+        
         [self.calendarCollectionView reloadData];
         [self reloadExternalDate];
     }
@@ -289,6 +332,12 @@
 - (void)checkCalendarWithAppointDate:(NSDate *)date
 {
     [self.calendarManage checkThisMonthRecordFromToday:date];
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSInteger day = [calendar component:NSCalendarUnitDay fromDate:date];
+    NSInteger index = [self.calendarManage.calendarDate indexOfObject:@(day)];
+    NSLog(@"selected date index: %ld", index);
+    self.selectedRow = index;
     [self.calendarCollectionView reloadData];
     self.theDate = date;
     [self reloadExternalDate];
@@ -356,40 +405,131 @@
     return self.calendarManage.weekList.count;
 }
 
+- (BOOL) isMotherDay:(NSDate *)date {
+    NSCalendar *c = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comps = [c components:NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
+    if (comps.month != 5) return false;
+    NSString *weekDay = [CBLunarUtil weekdayStringFromDate:date];
+    if ([@"星期天" isEqualToString:weekDay]) {
+        if (comps.day > 7 && comps.day < 15) {
+            return true;
+        }
+    }
+    return false;
+}
+
+- (BOOL) isFatherDay:(NSDate *)date {
+    NSCalendar *c = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comps = [c components:NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
+    if (comps.month != 6) return false;
+    NSString *weekDay = [CBLunarUtil weekdayStringFromDate:date];
+    if ([@"星期天" isEqualToString:weekDay]) {
+        if (comps.day > 14 && comps.day < 22) {
+            return true;
+        }
+    }
+    return false;
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // 日期
     if (collectionView == self.calendarCollectionView) {
         SKCalendarCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Calendar" forIndexPath:indexPath];
+        
+        NSInteger day = [[self.gongcalendarDate objectAtIndex:indexPath.row] integerValue];
+        if (day != 0) {
+//            [self.dateComponents setYear:self.year];
+//            [self.dateComponents setMonth:self.month];
+//            [self.dateComponents setDay:day];
+//            NSDate *date = [self.calendar dateFromComponents:self.dateComponents];
+            cell.remindMarkHidden = ![RemindDataBase hasRemindWithYear:self.year month:self.month day:day];
+            
+            cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
+            
+            NSMutableDictionary *lunarDate = solarToLunar((int)self.year, (int)self.month, (int)day);
+            NSMutableArray *festivals = [[NSMutableArray alloc] init];
+            if (![@"" isEqualToString:[lunarDate objectForKey:@"solarFestival"]]) {
+                NSString *solarFestival = [lunarDate objectForKey:@"solarFestival"];
+                NSArray *components = [solarFestival componentsSeparatedByString:@" "];
+                NSString *str = components[0];
+                if (str.length <= 3) {
+                    [festivals addObject:str];
+                }
+            }
+            if (![@"" isEqualToString:[lunarDate objectForKey:@"lunarFestival"]]) {
+                [festivals addObject:[lunarDate objectForKey:@"lunarFestival"]];
+            }
+//            if ([self isMotherDay:date]) {
+//                [festivals addObject:@"母亲节"];
+//            }
+//            if ([self isFatherDay:date]) {
+//                [festivals addObject:@"父亲节"];
+//            }
+            
+            if (![@"" isEqualToString:[lunarDate objectForKey:@"weekFestival"]]) {
+                NSString *weekFestival = [lunarDate objectForKey:@"weekFestival"];
+                NSArray *components = [weekFestival componentsSeparatedByString:@" "];
+                NSString *str = components[0];
+                if (str.length <= 3) {
+                    [festivals addObject:str];
+                }
+            }
+            if (![@"" isEqualToString:[lunarDate objectForKey:@"term"]]) {
+                [festivals addObject:[lunarDate objectForKey:@"term"]];
+            }
+            [festivals addObject:[lunarDate objectForKey:@"lunarDayName"]];
+            if (festivals.count == 0) {
+                cell.festivals = NULL;
+            } else {
+                cell.festivals = [[NSArray alloc] initWithArray:festivals];
+            }
+            cell.hidden = false;
+        } else {
+            cell.calendarDate = @"";
+            cell.calendarTitle = @"";
+            cell.hidden = true;
+            cell.festivals = NULL;
+        }
+        
+        cell.dateColor = nil;
+        cell.calendarDateColor = nil;
+        cell.calendarTitleColor = nil;
+        cell.dateBackgroundIcon = nil;
+        
         // 是否属于双休日
         if ((indexPath.row + 1) % 7 == 0 || (indexPath.row + 1) % 7 == 1) {
             cell.calendarDateColor = self.dayoffInWeekColor;
         } else {
             cell.calendarDateColor = self.normalInWeekColor;
         }
+        
         // 如果是选中的日期
         if (self.selectedRow == indexPath.row && !isEmpty(self.calendarManage.calendarDate[indexPath.row])) {
-            cell.enableClickEffect = YES;
-            cell.dateColor = [UIColor colorWithRed:204 / 255.0 green:228 / 255.0 blue:236 / 255.0 alpha:1.0];
-            cell.calendarDateColor = [UIColor whiteColor];
+//            cell.enableClickEffect = YES;
+//            cell.dateColor = [UIColor colorWithRed:204 / 255.0 green:228 / 255.0 blue:236 / 255.0 alpha:1.0];
+//            cell.calendarDateColor = [UIColor whiteColor];
+            cell.calendarDateColor = self.calendarTodayColor;
+            cell.calendarTitleColor = self.calendarTodayTitleColor;
+            cell.dateColor = [TXSakuraManager tx_colorWithPath:@"accentColor"];
         } else {
             cell.enableClickEffect = NO;
-            cell.dateColor = nil;
+//            cell.dateColor = nil;
         }
         // 是否属于今天
         if (self.theDayInMonth == indexPath.row && self.calendarManage.month == self.calendarManage.theMonth && self.theYear == self.calendarManage.year) {
-            cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
-            cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
-            cell.calendarDateColor = self.calendarTodayColor;
+//            cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
+//            cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
+//            cell.calendarDateColor = self.calendarTodayColor;
             cell.calendarTitle = getNoneNil(self.calendarTodayTitle);
-            cell.calendarTitleColor = self.calendarTodayTitleColor;
+//            cell.calendarTitleColor = self.calendarTodayTitleColor;
 //            cell.dateColor = self.dateColor;
-            cell.dateColor = [TXSakuraManager tx_colorWithPath:@"accentColor"];
+//            cell.dateColor = [TXSakuraManager tx_colorWithPath:@"accentColor"];
             
         } else {
-            cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
-            cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
-            cell.calendarTitleColor = nil;
+//            cell.calendarDate = getNoneNil(self.calendarManage.calendarDate[indexPath.row]);// 公历日期
+//            cell.calendarTitle = getNoneNil(self.calendarManage.chineseCalendarDate[indexPath.row]);// 农历日期
+//            cell.calendarTitleColor = nil;
         }
         // 对节日&节气进行特殊处理
         if (![self.calendarManage.chineseCalendarDay[indexPath.row] isEqualToString:self.calendarManage.chineseCalendarDate[indexPath.row]]) {
@@ -416,8 +556,8 @@
                 }
             }
         } else {
-            cell.calendarTitleColor = self.calendarTitleColor;
-            cell.dateBackgroundIcon = nil;
+//            cell.calendarTitleColor = self.calendarTitleColor;
+//            cell.dateBackgroundIcon = nil;
         }
         
         return cell;

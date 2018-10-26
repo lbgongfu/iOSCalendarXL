@@ -74,10 +74,12 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
         fieldComment.resignFirstResponder()
         fieldRemindText.resignFirstResponder()
         var tempRemind = remind
+        var newRemind = true
         if tempRemind == nil {
             tempRemind = Remind()
             tempRemind!.filePath = dataFilePath()
         } else {
+            newRemind = false
             if let notifications = UIApplication.shared.scheduledLocalNotifications {
                 notifications.forEach({(notification) in
                     if let userInfo = notification.userInfo {
@@ -123,6 +125,10 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
         archiver.finishEncoding()
         //数据写入
         data.write(toFile: tempRemind!.filePath!, atomically: false)
+        
+        if newRemind {
+            RemindDataBase.add(remind: tempRemind!)
+        }
         
         var fireDate = tempRemind!.date
         switch tempRemind!.delayType {
@@ -457,6 +463,14 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
     @IBOutlet weak var imageCollectionView: UICollectionView!
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        let color = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 10))
+        headerView.backgroundColor = color;
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 10))
+        footerView.backgroundColor = color
+        tableView.tableHeaderView = headerView
+        tableView.tableFooterView = footerView
         var image = UIImage(named: "CLOCK-1")
         image = image?.withRenderingMode(.alwaysTemplate)
         imageViewClock.image = image
@@ -514,18 +528,18 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
         labelCalendar.sakura.textColor()("accentColor")
         
         var layout =  audioCollectionView.collectionViewLayout as! LXCollectionViewLeftOrRightAlignedLayout
-        layout.itemSize = CGSize(width: 70, height: 70)
+        layout.itemSize = CGSize(width: RemindViewController.mediaCellSize, height: RemindViewController.mediaCellSize)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        layout.estimatedItemSize = CGSize(width: 70, height: 70)
+        layout.estimatedItemSize = CGSize(width: RemindViewController.mediaCellSize, height: RemindViewController.mediaCellSize)
         
         layout =  imageCollectionView.collectionViewLayout as! LXCollectionViewLeftOrRightAlignedLayout
-        layout.itemSize = CGSize(width: 70, height: 70)
+        layout.itemSize = CGSize(width: RemindViewController.mediaCellSize, height: RemindViewController.mediaCellSize)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        layout.estimatedItemSize = CGSize(width: 70, height: 70)
+        layout.estimatedItemSize = CGSize(width: RemindViewController.mediaCellSize, height: RemindViewController.mediaCellSize)
         
         labelRepeat.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:))))
         
@@ -533,7 +547,7 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
     
         currentDate = Date()
         let dateFormater = DateFormatter()
-        dateFormater.dateFormat = "yyyy年MM月dd日 hh:mm"
+        dateFormater.dateFormat = "yyyy年MM月dd日 HH:mm"
         labelTime.text = dateFormater.string(from: currentDate)
         labelTime.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:))))
         
@@ -549,7 +563,7 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
             fieldRemindText.text = tempRemind.content
             fieldComment.text = tempRemind.remarks
             let formater = DateFormatter()
-            formater.dateFormat = "yyyy年MM月dd日 hh:mm"
+            formater.dateFormat = "yyyy年MM月dd日 HH:mm"
             labelTime.text = formater.string(from: tempRemind.date)
             currentDate = tempRemind.date
             labelRepeat.text = CreateRemindViewController.repeatActions[tempRemind.repeatType.rawValue]
@@ -599,7 +613,7 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
                 
                 //date -> string
                 let myFormatter = DateFormatter()
-                myFormatter.dateFormat = "yyyy年MM月dd日 hh:mm"
+                myFormatter.dateFormat = "yyyy年MM月dd日 HH:mm"
                 self.labelTime.text = myFormatter.string(from: self.currentDate)
                 return
             }, cancel: { ActionStringCancelBlock in return }, origin: labelTime)
@@ -633,17 +647,17 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
     @IBOutlet weak var imageTableCell: UITableViewCell!
     
     func updateAudioCollectionViewHeight() {
-        let hCount = Int(audioCollectionView.frame.width) / 70
+        let hCount = Int(audioCollectionView.frame.width) / RemindViewController.mediaCellSize
         var row = audioClips.count / hCount
         row = audioClips.count % hCount == 0 ? row : row + 1
         if audioCollectionViewHeightConstraint == nil {
-            audioCollectionViewHeightConstraint = NSLayoutConstraint(item: audioCollectionView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(row * 70))
+            audioCollectionViewHeightConstraint = NSLayoutConstraint(item: audioCollectionView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(row * RemindViewController.mediaCellSize))
             
             audioCollectionView.addConstraint(audioCollectionViewHeightConstraint!)
         } else {
-            audioCollectionViewHeightConstraint?.constant = CGFloat(row * 70)
+            audioCollectionViewHeightConstraint?.constant = CGFloat(row * RemindViewController.mediaCellSize)
         }
-        let height = 12 + Double(row * 70)
+        let height = 12 + Double(row * RemindViewController.mediaCellSize)
         
         audioTableCell.frame = CGRect(x: audioTableCell.frame.origin.x, y: audioTableCell.frame.origin.y, width: audioTableCell.frame.width, height: CGFloat(height))
         
@@ -651,17 +665,17 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
     }
     
     func updateImageCollectionViewHeight() {
-        let hCount = Int(imageCollectionView.frame.width) / 70
+        let hCount = Int(imageCollectionView.frame.width) / RemindViewController.mediaCellSize
         var row = images.count / hCount
         row = images.count % hCount == 0 ? row : row + 1
         if imageCollectionViewHeightConstraint == nil {
-            imageCollectionViewHeightConstraint = NSLayoutConstraint(item: imageCollectionView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(row * 70))
+            imageCollectionViewHeightConstraint = NSLayoutConstraint(item: imageCollectionView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(row * RemindViewController.mediaCellSize))
             
             imageCollectionView.addConstraint(imageCollectionViewHeightConstraint!)
         } else {
-            imageCollectionViewHeightConstraint?.constant = CGFloat(row * 70)
+            imageCollectionViewHeightConstraint?.constant = CGFloat(row * RemindViewController.mediaCellSize)
         }
-        let height = 12 + Double(row * 70)
+        let height = 12 + Double(row * RemindViewController.mediaCellSize)
         
         imageTableCell.frame = CGRect(x: imageTableCell.frame.origin.x, y: imageTableCell.frame.origin.y, width: imageTableCell.frame.width, height: CGFloat(height))
         
@@ -677,4 +691,8 @@ class CreateRemindViewController: UITableViewController, UICollectionViewDataSou
             controller.delegate = self
         }
     }
+    
+//    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return CGFloat.leastNormalMagnitude
+//    }
 }

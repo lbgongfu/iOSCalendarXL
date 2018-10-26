@@ -27,6 +27,8 @@
 @interface LunarDatePickerView : UIView
 
 @property (copy, nonatomic) NSString *title;
+@property (copy, nonatomic) NSArray *chineseMonths;
+@property (copy, nonatomic) NSArray *chineseDays;
 
 /// 是否自动滑动 默认YES
 @property (assign, nonatomic) BOOL isSlide;

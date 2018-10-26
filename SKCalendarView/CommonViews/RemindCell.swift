@@ -79,30 +79,30 @@ class RemindCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewD
     }
     
     func updateAudioCollectionViewHeight() {
-        let hCount = Int(collectionViewAudio.frame.width) / 70
+        let hCount = Int(collectionViewAudio.frame.width) / RemindViewController.mediaCellSize
         var row = audios.count / hCount
         row = audios.count % hCount == 0 ? row : row + 1
         collectionViewAudio.constraints.forEach({constraint in
             if constraint.firstAttribute == .height {
-                constraint.constant = CGFloat(row * 70)
+                constraint.constant = CGFloat(row * RemindViewController.mediaCellSize)
             }
         })
 //        if heightConstraint == nil {
-//            heightConstraint = NSLayoutConstraint(item: collectionViewAudio, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(row * 70))
+//            heightConstraint = NSLayoutConstraint(item: collectionViewAudio, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: CGFloat(row * RemindViewController.mediaCellSize))
 //
 //            collectionViewAudio.addConstraint(heightConstraint!)
 //        } else {
-//            heightConstraint?.constant = CGFloat(row * 70)
+//            heightConstraint?.constant = CGFloat(row * RemindViewController.mediaCellSize)
 //        }
     }
     
     func updateImageCollectionViewHeight() {
-        let hCount = Int(collectionViewAudio.frame.width) / 70
+        let hCount = Int(collectionViewAudio.frame.width) / RemindViewController.mediaCellSize
         var row = images.count / hCount
         row = images.count % hCount == 0 ? row : row + 1
         collectionViewImage.constraints.forEach({constraint in
             if constraint.firstAttribute == .height {
-                constraint.constant = CGFloat(row * 70)
+                constraint.constant = CGFloat(row * RemindViewController.mediaCellSize)
             }
         })
     }
@@ -128,20 +128,20 @@ class RemindCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewD
         collectionViewImage.register(cellNib, forCellWithReuseIdentifier: "imageCell")
         
         var layout = collectionViewAudio.collectionViewLayout as! LXCollectionViewLeftOrRightAlignedLayout
-        layout.itemSize = CGSize(width: 70, height: 70)
+        layout.itemSize = CGSize(width: RemindViewController.mediaCellSize, height: RemindViewController.mediaCellSize)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        layout.estimatedItemSize = CGSize(width: 70, height: 70)
+        layout.estimatedItemSize = CGSize(width: RemindViewController.mediaCellSize, height: RemindViewController.mediaCellSize)
         
         updateAudioCollectionViewHeight()
         
         layout = collectionViewImage.collectionViewLayout as! LXCollectionViewLeftOrRightAlignedLayout
-        layout.itemSize = CGSize(width: 70, height: 70)
+        layout.itemSize = CGSize(width: RemindViewController.mediaCellSize, height: RemindViewController.mediaCellSize)
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
-        layout.estimatedItemSize = CGSize(width: 70, height: 70)
+        layout.estimatedItemSize = CGSize(width: RemindViewController.mediaCellSize, height: RemindViewController.mediaCellSize)
         
         updateImageCollectionViewHeight()
     }

@@ -95,7 +95,7 @@ class AudioClipCell: MediaCollectionViewCell, AVAudioPlayerDelegate {
         clipsToBounds = false
         viewBg.layer.cornerRadius = 8
         viewBg.layer.borderWidth = 1
-        viewBg.layer.borderColor = UIColor.gray.cgColor
+        viewBg.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1).cgColor
         
         playImage = btnPlay.imageView?.image
     }

@@ -28,7 +28,7 @@ class RemindTableViewHelper: NSObject, UITableViewDataSource, UITableViewDelegat
         cell.addGestureRecognizer(longPress)
         let remind = reminds![indexPath.row];
         let formater = DateFormatter()
-        formater.dateFormat = "hh:mm";
+        formater.dateFormat = "HH:mm";
         cell.labelTime.text = formater.string(from: remind.date)
         cell.labelContent.text = remind.content;
         return cell
@@ -74,6 +74,7 @@ class RemindTableViewHelper: NSObject, UITableViewDataSource, UITableViewDelegat
                     print("delete remind occurred error: \(error)")
                 }
                 self.reminds?.remove(at: self.indexToDelete)
+                RemindDataBase.remove(remind: remindToDelete)
                 self.tableView?.reloadData()
             })
             alertController.addAction(cancelAction)

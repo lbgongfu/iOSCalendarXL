@@ -20,5 +20,10 @@
 @property (nonatomic, assign) BOOL enableClickEffect;// 开启点击效果
 @property (nonatomic, assign) BOOL enableDateRoundCorner;// 开启日期圆角, 默认YES
 @property (nonatomic, assign) BOOL enableLine;// 开启边线, 默认YES
+@property (nonatomic, assign) BOOL remindMarkHidden;
+
+@property (nonatomic, strong) NSArray * festivals;//节日
+@property (nonatomic, strong) NSTimer * timer;
+@property (nonatomic, assign) NSInteger festivalIndex;
 
 @end

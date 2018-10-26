@@ -16,6 +16,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     private static let chineseMonths: [String] = ["正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"]
     private static let chineseDays: [String] = ["初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "廿十", "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"]
     
+    private static let jieqi: [String] = ["立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑", "白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪", "冬至", "小寒", "大寒"]
+    
     @IBOutlet weak var labelSolarDate: UILabel!
     @IBOutlet weak var labelLunarDate: UILabel!
     
@@ -24,6 +26,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
         self.view.addGestureRecognizer(tap)
         updateDate()
+    }
+    
+    static func isJieQi(str: String) -> Bool {
+        return jieqi.contains(str)
     }
     
     @objc func tapped(_ ges: UITapGestureRecognizer) {

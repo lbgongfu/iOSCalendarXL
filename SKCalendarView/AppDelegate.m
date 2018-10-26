@@ -18,6 +18,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [RemindDataBase initDataBase];
+    
     UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
     
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
@@ -90,7 +93,7 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    if ([NSUserDefaults.standardUserDefaults boolForKey:@"popup"]) {
+    if ([NSUserDefaults.standardUserDefaults objectForKey:@"popup"] == NULL || [NSUserDefaults.standardUserDefaults boolForKey:@"popup"]) {
         if ([notification.userInfo objectForKey:@"remindFilePath"] != NULL) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:notification.alertBody preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *closeAction = [UIAlertAction actionWithTitle:@"关闭" style:UIAlertActionStyleDefault handler:NULL];

@@ -52,6 +52,7 @@
 @property (strong, nonatomic) NSMutableArray * chineseCalendarMonth;// 农历月份
 @property (strong, nonatomic) NSMutableArray * gongcalendarDate;// 公历日期
 @property (assign, nonatomic) NSInteger todayInMonth;// 今天在本月是第几天
+@property (assign, nonatomic) NSInteger selectedRow;
 
 /** 根据农历日期获取节日&节气
  * @param chineseDay 农历纯日期(不包括节日&节气)
@@ -62,5 +63,7 @@
  * @param date 指定查看的日期
  */
 - (void)checkCalendarWithAppointDate:(NSDate *)date;
+
+- (void)returnToToday;
 
 @end

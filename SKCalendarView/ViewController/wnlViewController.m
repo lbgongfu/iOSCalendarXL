@@ -11,6 +11,9 @@
 #import "SKCalendarView-Swift.h"
 #import "RemindCell2.h"
 #import "TXSakuraKit.h"
+#import "../CommonViews/TianGanDiZhi.h"
+#import <ActionSheetPicker.h>
+#import "../LunarCore/LunarCore.h"
 
 @interface wnlViewController () <SKCalendarViewDelegate>
 //@property (nonatomic, strong) SKCalendarView * calendarView;
@@ -23,9 +26,11 @@
 //@property (nonatomic, strong) UILabel * dayLabel;// 公历年
 //@property (nonatomic, strong) UILabel * holidayLabel;//节日&节气
 @property (nonatomic, strong) UIButton * backToday;// 返回今天
+@property (nonatomic, strong) TianGanDiZhi *tianGanDiZhi;
 
 @property (nonatomic, assign) NSUInteger lastMonth;
 @property (nonatomic, assign) NSUInteger nextMonth;
+@property (nonatomic, strong) NSDate *selectedDate;
 @property (nonatomic) RemindTableViewHelper* helper;
 @property (weak, nonatomic) IBOutlet UIView *calendarViewContainer;
 @property (weak, nonatomic) IBOutlet UILabel *dayLabel;// 公立天
@@ -34,7 +39,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *holidayLabel;//节日&节气
 @property (weak, nonatomic) IBOutlet UIView *holidayLabelContainer;
 @property (weak, nonatomic) IBOutlet UIView *lunarView;
-@property (weak, nonatomic) IBOutlet UINavigationItem *yearLabel;
+//@property (weak, nonatomic) IBOutlet UINavigationItem *yearLabel;
+@property (weak, nonatomic) IBOutlet UIButton *yearLabel;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *nextButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *lastButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableViewRemind;//提醒列表
@@ -50,11 +56,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tianGanDiZhi = [TianGanDiZhi new];
+    self.selectedDate = [NSDate date];
+    
     self.navigationController.navigationBar.sakura.titleTextAttributes(@"navBarTitleColor");
     self.navigationController.navigationBar.sakura.tintColor(@"accentColor");
     
     self.dayLabel.sakura.textColor(@"accentColor");
     self.holidayLabel.sakura.textColor(@"accentColor");
+    self.yearLabel.sakura.titleColor(@"accentColor", UIControlStateNormal);
     
     self.contentCellHeight = 340;
 //    self.reminds = [[NSMutableArray alloc] init];
@@ -105,8 +115,7 @@
 //        make.centerX.equalTo(self.calendarView);
 //    }];
 //    printf("%s", [NSString stringWithFormat:@"%@年%@月", @(self.calendarView.year), @(self.calendarView.month)]);
-    self.yearLabel.title = [NSString stringWithFormat:@"%@年%@月", @(self.calendarView.year), @(self.calendarView.month)];
-    
+    [self.yearLabel setTitle:[NSString stringWithFormat:@"%@年%@月", @(self.calendarView.year), @(self.calendarView.month)] forState:UIControlStateNormal];
     // 公历日
 //    self.dayLabel = [UILabel new];
 //    [self.lunarView addSubview:self.dayLabel];
@@ -137,7 +146,8 @@
 //    [self.lunarView addSubview:self.chineseYearLabel];
 //    self.chineseYearLabel.font = [UIFont systemFontOfSize:18];
 //    self.chineseYearLabel.textColor = [UIColor grayColor];
-    self.chineseYearLabel.text = [NSString stringWithFormat:@"%@年", self.calendarView.chineseYear];
+//    self.chineseYearLabel.text = [NSString stringWithFormat:@"%@年", self.calendarView.chineseYear];
+    self.chineseYearLabel.text = [self.tianGanDiZhi getTiDiResult:[NSDate new]];
 //    self.chineseYearLabel.textAlignment = NSTextAlignmentCenter;
 //    [self.chineseYearLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.top.equalTo(self.chineseMonthAndDayLabel.mas_bottom).with.offset(5);
@@ -151,11 +161,13 @@
 //    self.holidayLabel.textColor = [UIColor purpleColor];
 //    self.holidayLabel.textAlignment = NSTextAlignmentCenter;
     // 获取节日，注意：此处传入的参数为chineseCalendarDay(包含不节日等信息)
-    self.holidayLabel.text = [self.calendarView getHolidayAndSolarTermsWithChineseDay:getNoneNil(self.calendarView.chineseCalendarDay[self.calendarView.todayInMonth])];
-    if ([@"" isEqualToString:self.holidayLabel.text]) {
-        self.holidayLabelContainer.hidden = true;
-    } else {
+    NSString *str = [self.calendarView getHolidayAndSolarTermsWithChineseDay:getNoneNil(self.calendarView.chineseCalendarDay[self.calendarView.todayInMonth])];
+    if ([CalendarUtil isJieQiWithStr:str]) {
+        self.holidayLabel.text = str;
         self.holidayLabelContainer.hidden = false;
+    } else {
+        self.holidayLabel.text = @"";
+        self.holidayLabelContainer.hidden = true;
     }
 //    [self.holidayLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 //        //        make.top.equalTo(self.chineseMonthAndDayLabel.mas_left);
@@ -189,18 +201,113 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    NSArray<Remind *> *list = [RemindViewController getRemindList];
-    if (list.count == 0) {
+//    NSArray<Remind *> *list = [RemindViewController getRemindList];
+//    if (list.count == 0) {
+//        self.contentCellHeight = 340;
+//    } else {
+//        self.contentCellHeight = 340 + 70;
+//        self.helper.reminds = list;
+//    }
+//    [self.tableView reloadData];
+//    [self.tableViewRemind reloadData];
+//
+    [super viewDidAppear:animated];
+    [self updateRemindList:self.selectedDate];
+    [self.calendarView checkCalendarWithAppointDate:self.selectedDate];
+    [self.calendarView returnToToday];
+    [self clickBackToday];
+}
+
+- (void)updateRemindList:(NSDate *)date {
+    NSMutableArray<Remind *> *reminds = [[NSMutableArray<Remind *> alloc] init];
+    NSArray<Remind *> *list = [RemindDataBase list];
+    NSCalendar *c = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *components = [c components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday fromDate:date];
+    NSInteger year = components.year;
+    NSInteger month = components.month;
+    NSInteger day = components.day;
+    NSInteger weekday = components.weekday;
+    NSLog(@"selected date: %ld %ld %ld", components.year, components.month, components.day);
+    for (NSInteger i = 0; i < list.count; i++) {
+        Remind *remind = [list objectAtIndex:i];
+        
+        NSDateComponents *components1 = [c components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday fromDate:remind.date];
+        NSInteger year1 = components1.year;
+        NSInteger month1 = components1.month;
+        NSInteger day1 = components1.day;
+        NSInteger weekday1 = components1.weekday;
+        NSLog(@"remind date: %ld %ld %ld %ld", components1.year, components1.month, components1.day, components1.weekday);
+        
+        BOOL shouldBeAdded = false;
+        switch (remind.repeatType) {
+            case RemindRepeatTypeNorepeat:
+                if (year == year1 && month == month1 && day == day1) {
+                    shouldBeAdded = true;
+                }
+                break;
+            case RemindRepeatTypeRepeatPerYear:
+                if (month == month1 && day == day1) {
+                    if (year >= year1) {
+                        shouldBeAdded = true;
+                    }
+                }
+                break;
+            case RemindRepeatTypeRepeatPerMonth:
+                if (day == day1) {
+                    if (year > year1) {
+                        shouldBeAdded = true;
+                    }
+                    if (year == year1 && month >= month1) {
+                        shouldBeAdded = true;
+                    }
+                }
+                break;
+            case RemindRepeatTypeRepeatPerWeek:
+                if (weekday == weekday1) {
+                    if (year > year1) {
+                        shouldBeAdded = true;
+                    }
+                    if (year == year1) {
+                        if (month > month1) {
+                            shouldBeAdded = true;
+                        }
+                        if (month == month1 && day >= day1) {
+                            shouldBeAdded = true;
+                        }
+                    }
+                }
+                break;
+            case RemindRepeatTypeRepeatPerDay:
+                if (year > year1) {
+                    shouldBeAdded = true;
+                }
+                if (year == year1) {
+                    if (month > month1) {
+                        shouldBeAdded = true;
+                    }
+                    if (month == month1 && day >= day1) {
+                        shouldBeAdded = true;
+                    }
+                }
+                break;
+        }
+//        if (components.month == components1.month && components.day == components1.day) {
+//            if (components.year == components1.year || (remind.repeatType == RemindRepeatTypeRepeatPerDay)) {
+//                [reminds addObject:remind];
+//            }
+//        }
+        if (shouldBeAdded) {
+            [reminds addObject:remind];
+        }
+    }
+    if (reminds.count == 0) {
         self.contentCellHeight = 340;
     } else {
         self.contentCellHeight = 340 + 70;
-        self.helper.reminds = list;
     }
+    self.helper.reminds = reminds;
     [self.tableView reloadData];
     [self.tableViewRemind reloadData];
-    
-    NSDate *now = [NSDate new];
-    [self.calendarView checkCalendarWithAppointDate:now];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -243,7 +350,7 @@
     _calendarView.layer.shadowOpacity = 0.1f;
     
     _calendarView.delegate = self;// 获取点击日期的方法，一定要遵循协议
-    _calendarView.calendarTodayTitleColor = [UIColor redColor];// 今天标题字体颜色
+    _calendarView.calendarTodayTitleColor = [UIColor whiteColor];// 今天标题字体颜色
     _calendarView.calendarTodayTitle = @"今日";// 今天下标题
 //    _calendarView.dateColor = [TXSakuraManager tx_colorWithPath:@"accentColor"];// 今天日期数字背景颜色
     _calendarView.calendarTodayColor = [UIColor whiteColor];// 今天日期字体颜色
@@ -255,6 +362,24 @@
     _calendarView.holidayColor = [UIColor redColor];//节日字体颜色
     self.lastMonth = _calendarView.lastMonth;// 获取上个月的月份
     self.nextMonth = _calendarView.nextMonth;// 获取下个月的月份
+    
+    UISwipeGestureRecognizer *swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeClick:)];
+    swipeLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.calendarView addGestureRecognizer:swipeLeft];
+    
+    UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeClick:)];
+    swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.calendarView addGestureRecognizer:swipeRight];
+}
+
+-(void)swipeClick:(UISwipeGestureRecognizer *)swipe{
+    if(swipe.direction == UISwipeGestureRecognizerDirectionRight){
+        NSLog(@"swipe right");
+        [self toLastMonth];
+    } else if (swipe.direction==UISwipeGestureRecognizerDirectionLeft){
+        NSLog(@"swipe left");
+        [self toNextMonth];
+    }
 }
 
 #pragma mark - 日历设置
@@ -289,18 +414,33 @@
 //    return _calendarView;
 //}
 - (IBAction)checkNextMonthCalendar:(id)sender {
+    [self toNextMonth];
+    [self selectDateWithRow:self.calendarView.selectedRow];
+}
+
+- (void)toNextMonth {
     self.calendarView.checkNextMonth = YES;// 查看下月
     [self changeButton:self.nextButton isNext:YES];
     [SKCalendarAnimationManage animationWithView:self.calendarView andEffect:SK_ANIMATION_REVEAL isNext:YES];
-    self.chineseYearLabel.text = [NSString stringWithFormat:@"%@年", self.calendarView.chineseYear];// 农历年
-    self.yearLabel.title = [NSString stringWithFormat:@"%@年%@月", @(self.calendarView.year), @(self.calendarView.month)];
+    //    self.chineseYearLabel.text = [NSString stringWithFormat:@"%@年", self.calendarView.chineseYear];// 农历年
+//    self.chineseYearLabel.text = [self.tianGanDiZhi getTiDiResult: self.selectedDate];
+    [self.yearLabel setTitle:[NSString stringWithFormat:@"%@年%@月", @(self.calendarView.year), @(self.calendarView.month)] forState:UIControlStateNormal];
+    [self selectDateWithRow:self.calendarView.selectedRow];
 }
+
 - (IBAction)checkLastMonthCalendar:(id)sender {
+    [self toLastMonth];
+    [self selectDateWithRow:self.calendarView.selectedRow];
+}
+
+- (void)toLastMonth {
     self.calendarView.checkLastMonth = YES;// 查看上月
     [self changeButton:self.lastButton isNext:NO];
     [SKCalendarAnimationManage animationWithView:self.calendarView andEffect:SK_ANIMATION_REVEAL isNext:NO];
-    self.chineseYearLabel.text = [NSString stringWithFormat:@"%@年", self.calendarView.chineseYear];// 农历年
-    self.yearLabel.title = [NSString stringWithFormat:@"%@年%@月", @(self.calendarView.year), @(self.calendarView.month)];
+    //    self.chineseYearLabel.text = [NSString stringWithFormat:@"%@年", self.calendarView.chineseYear];// 农历年
+//    self.chineseYearLabel.text = [self.tianGanDiZhi getTiDiResult:[NSDate new]];
+    [self.yearLabel setTitle:[NSString stringWithFormat:@"%@年%@月", @(self.calendarView.year), @(self.calendarView.month)] forState:UIControlStateNormal];
+    [self selectDateWithRow:self.calendarView.selectedRow];
 }
 
 #pragma mark - 查看上/下一月份日历
@@ -373,18 +513,64 @@
     self.nextButton.title = [NSString stringWithFormat:@"%@月", @(self.nextMonth)];
 }
 
+- (IBAction)yearLabelClicked:(id)sender {
+    NSDate *date = [NSDate date];
+    void(^doneBlock)(ActionSheetDatePicker *picker, id selectedDate, id origin) = ^(ActionSheetDatePicker *picker, id selectedDate, id origin) {
+        NSLog(@"selected date is: %@", selectedDate);
+        [self.calendarView checkCalendarWithAppointDate:selectedDate];
+        [self.yearLabel setTitle:[NSString stringWithFormat:@"%@年%@月", @(self.calendarView.year), @(self.calendarView.month)] forState:UIControlStateNormal];
+        self.lastMonth = _calendarView.lastMonth;// 获取上个月的月份
+        self.nextMonth = _calendarView.nextMonth;// 获取下个月的月份
+        
+        self.lastButton.title = [NSString stringWithFormat:@"%@月", @(self.lastMonth)];
+        self.nextButton.title = [NSString stringWithFormat:@"%@月", @(self.nextMonth)];
+        
+        NSString *str = [self.calendarView getHolidayAndSolarTermsWithChineseDay:getNoneNil(self.calendarView.chineseCalendarDay[self.calendarView.todayInMonth])];
+        if ([CalendarUtil isJieQiWithStr:str]) {
+            self.holidayLabel.text = str;
+            self.holidayLabelContainer.hidden = false;
+        } else {
+            self.holidayLabel.text = @"";
+            self.holidayLabelContainer.hidden = true;
+        }
+        
+        [self selectDateWithRow:self.calendarView.selectedRow];
+    };
+    ActionSheetDatePicker *picker = [[ActionSheetDatePicker alloc] initWithTitle:@"选择日期" datePickerMode:UIDatePickerModeDate selectedDate:self.selectedDate doneBlock:doneBlock cancelBlock:nil origin:self.yearLabel];
+    [picker showActionSheetPicker];
+}
+
 #pragma mark - 点击日期
 - (void)selectDateWithRow:(NSUInteger)row
 {
+    NSLog(@"year: %d month: %d day %d", self.calendarView.year, self.calendarView.month, [self.calendarView.gongcalendarDate[row] integerValue]);
+    
+    NSInteger day = [self.calendarView.gongcalendarDate[row] integerValue];
+    NSCalendar *c = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    [comps setYear:self.calendarView.year];
+    [comps setMonth:self.calendarView.month];
+    [comps setDay:day];
+    [comps setHour:12];
+    [comps setMinute:0];
+    [comps setSecond:0];
+    self.selectedDate = [c dateFromComponents:comps];
+    
     self.dayLabel.text = [NSString stringWithFormat:@"%@", self.calendarView.gongcalendarDate[row]];
     self.chineseMonthAndDayLabel.text = [NSString stringWithFormat:@"农历%@%@", self.calendarView.chineseCalendarMonth[row], getNoneNil(self.calendarView.chineseCalendarDay[row])];
+    self.chineseYearLabel.text = [self.tianGanDiZhi getTiDiResult: self.selectedDate];
     // 获取节日，注意：此处传入的参数为chineseCalendarDay(不包含节日等信息)
-    self.holidayLabel.text = [self.calendarView getHolidayAndSolarTermsWithChineseDay:getNoneNil(self.calendarView.chineseCalendarDay[row])];
-    if ([@"" isEqualToString:self.holidayLabel.text]) {
+    
+    NSMutableDictionary *lunarDateDic = solarToLunar((int)self.calendarView.year, (int)self.calendarView.month, (int)day);
+    NSString *term = [lunarDateDic objectForKey:@"term"];
+    if ([@"" isEqualToString:term]) {
+        self.holidayLabel.text = @"";
         self.holidayLabelContainer.hidden = true;
     } else {
+        self.holidayLabel.text = term;
         self.holidayLabelContainer.hidden = false;
     }
+    [self updateRemindList:self.selectedDate];
 }
 
 #pragma mark - 返回今日
@@ -398,6 +584,7 @@
     
     self.lastButton.title = [NSString stringWithFormat:@"%@月", @(self.lastMonth)];
     self.nextButton.title = [NSString stringWithFormat:@"%@月", @(self.nextMonth)];
+    [self.yearLabel setTitle:[NSString stringWithFormat:@"%@年%@月", @(self.calendarView.year), @(self.calendarView.month)] forState:UIControlStateNormal];
 }
 
 @end

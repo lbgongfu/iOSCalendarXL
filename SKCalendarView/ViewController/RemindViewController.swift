@@ -27,7 +27,7 @@ class RemindViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var btnNew: UIButton!
     
-    let mediaCellSize = 70
+    static let mediaCellSize = 60
     
     var reminds = [Remind]()
 
@@ -49,7 +49,7 @@ class RemindViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidAppear(_ animated: Bool) {
         reminds.removeAll()
-        reminds.append(contentsOf: RemindViewController.getRemindList())
+        reminds.append(contentsOf: RemindDataBase.list())
         
         if reminds.count == 0 {
             emptyDataView.isHidden = false
@@ -104,6 +104,11 @@ class RemindViewController: UIViewController, UITableViewDataSource, UITableView
                 unarchiver.finishDecoding()
             }
         })
+        reminds.sort(by: {(remind1, remind2) in
+            let interval1 = remind1.date.timeIntervalSince1970
+            let interval2 = remind2.date.timeIntervalSince1970
+            return interval1 - interval2 < 0
+        })
         return reminds
     }
     
@@ -148,7 +153,7 @@ class RemindViewController: UIViewController, UITableViewDataSource, UITableView
         dateFormater.locale = Locale.current
         dateFormater.dateFormat = "yyyy-MM-dd EEEE"
         cell.labelDate.text = dateFormater.string(from: remind.date)
-        dateFormater.dateFormat = "hh:mm"
+        dateFormater.dateFormat = "HH:mm"
         cell.labelTime.text = dateFormater.string(from: remind.date)
         
         let calendar = Calendar(identifier: .chinese)
@@ -171,6 +176,7 @@ class RemindViewController: UIViewController, UITableViewDataSource, UITableView
     var indexToDelete = -1
     
     @objc func longPress(_ ges: UILongPressGestureRecognizer) {
+        
         if ges.state == .began {
             let point = ges.location(in: tableView)
             indexToDelete = (tableView.indexPathForRow(at: point)?.row)!
@@ -201,7 +207,15 @@ class RemindViewController: UIViewController, UITableViewDataSource, UITableView
                     print("delete remind occurred error: \(error)")
                 }
                 self.reminds.remove(at: self.indexToDelete)
+                RemindDataBase.remove(remind: remindToDelete)
                 self.tableView.reloadData()
+                if self.reminds.count == 0 {
+                    self.emptyDataView.isHidden = false
+                    self.tableView.isHidden = true
+                } else {
+                    self.emptyDataView.isHidden = true
+                    self.tableView.isHidden = false
+                }
             })
             controller.addAction(cancelAction)
             controller.addAction(positiveAction)

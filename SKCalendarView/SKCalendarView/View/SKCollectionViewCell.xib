@@ -39,11 +39,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今日" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6af-J1-4yP">
-                                <rect key="frame" x="10.5" y="25" width="20.5" height="12"/>
+                                <rect key="frame" x="10.5" y="21" width="20.5" height="12"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gHP-kF-9oC">
+                                <rect key="frame" x="17.5" y="33" width="6" height="6"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="6" id="6Ri-W5-rZ2"/>
+                                    <constraint firstAttribute="height" constant="6" id="XK5-bN-eQD"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -52,10 +60,12 @@
                             <constraint firstItem="q0E-T1-tXb" firstAttribute="centerX" secondItem="j0g-LU-bDx" secondAttribute="centerX" id="Wfm-Mh-P3v"/>
                             <constraint firstItem="iXL-dI-Jdn" firstAttribute="centerY" secondItem="j0g-LU-bDx" secondAttribute="centerY" id="Xi2-qR-dCJ"/>
                             <constraint firstAttribute="bottom" secondItem="GsA-uI-swb" secondAttribute="bottom" constant="1" id="bEH-AB-reg"/>
-                            <constraint firstAttribute="bottom" secondItem="6af-J1-4yP" secondAttribute="bottom" constant="4" id="fn5-Y8-eUQ"/>
+                            <constraint firstAttribute="bottom" secondItem="6af-J1-4yP" secondAttribute="bottom" constant="8" id="fn5-Y8-eUQ"/>
                             <constraint firstItem="GsA-uI-swb" firstAttribute="top" secondItem="j0g-LU-bDx" secondAttribute="top" constant="1" id="fwV-gT-sJO"/>
                             <constraint firstAttribute="trailing" secondItem="GsA-uI-swb" secondAttribute="trailing" constant="1" id="kDR-TX-vOp"/>
+                            <constraint firstItem="gHP-kF-9oC" firstAttribute="centerX" secondItem="j0g-LU-bDx" secondAttribute="centerX" id="nIQ-BI-Bpf"/>
                             <constraint firstItem="iXL-dI-Jdn" firstAttribute="centerX" secondItem="j0g-LU-bDx" secondAttribute="centerX" id="uzs-5K-MEY"/>
+                            <constraint firstAttribute="bottom" secondItem="gHP-kF-9oC" secondAttribute="bottom" constant="2" id="xWJ-4S-fxM"/>
                             <constraint firstItem="6af-J1-4yP" firstAttribute="centerX" secondItem="j0g-LU-bDx" secondAttribute="centerX" id="xoZ-j4-WeN"/>
                         </constraints>
                     </view>
@@ -74,6 +84,7 @@
                 <outlet property="baseView" destination="j0g-LU-bDx" id="K9a-cL-vDC"/>
                 <outlet property="dateLabel" destination="q0E-T1-tXb" id="H5E-x0-faO"/>
                 <outlet property="icon" destination="iXL-dI-Jdn" id="7nF-Ee-zsn"/>
+                <outlet property="remindMark" destination="gHP-kF-9oC" id="NSS-Dr-dCT"/>
                 <outlet property="titleLabel" destination="6af-J1-4yP" id="S4n-wm-448"/>
             </connections>
             <point key="canvasLocation" x="110.5" y="100.5"/>
