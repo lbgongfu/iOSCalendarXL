@@ -492,7 +492,8 @@
             cell.festivals = NULL;
         }
         
-        cell.dateColor = nil;
+//        cell.dateColor = nil;
+        cell.selected = false;
         cell.calendarDateColor = nil;
         cell.calendarTitleColor = nil;
         cell.dateBackgroundIcon = nil;
@@ -511,7 +512,8 @@
 //            cell.calendarDateColor = [UIColor whiteColor];
             cell.calendarDateColor = self.calendarTodayColor;
             cell.calendarTitleColor = self.calendarTodayTitleColor;
-            cell.dateColor = [TXSakuraManager tx_colorWithPath:@"accentColor"];
+//            cell.dateColor = [TXSakuraManager tx_colorWithPath:@"accentColor"];
+            cell.selected = true;
         } else {
             cell.enableClickEffect = NO;
 //            cell.dateColor = nil;

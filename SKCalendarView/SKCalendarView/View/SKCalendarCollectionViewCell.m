@@ -58,6 +58,7 @@
     self.remindMark.hidden = true;
     self.icon.layer.cornerRadius = 20;
     self.icon.layer.masksToBounds = true;
+    self.icon.sakura.backgroundColor(@"accentColor");
     
     self.remindMark.sakura.backgroundColor(@"accentColor");
     self.remindMark.layer.cornerRadius = 4;
@@ -152,6 +153,11 @@
 {
     _dateColor = dateColor;
     self.icon.backgroundColor = dateColor;
+}
+
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+    self.icon.hidden = !selected;
 }
 
 - (void)setDateIcon:(UIImage *)dateIcon
